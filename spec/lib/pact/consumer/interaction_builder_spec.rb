@@ -4,8 +4,8 @@ require 'pact/consumer/interaction_builder'
 module Pact
   module Consumer
     describe InteractionBuilder do
-
-      subject { InteractionBuilder.new {|interaction|} }
+      let(:pact) { PactFfi.new_pact('a', 'b') }
+      subject { InteractionBuilder.new(pact) { |interaction| } }
       let(:interaction) { double('Interaction').as_null_object}
 
       before do
@@ -68,7 +68,8 @@ module Pact
           allow(Pact::Response).to receive(:new).and_return(pact_response)
         end
 
-        subject { InteractionBuilder.new {|interaction| provider.callback(interaction) } }
+        let(:pact) { PactFfi.new_pact('a', 'b') }
+        subject { InteractionBuilder.new(pact) { |interaction| provider.callback(interaction) } }
 
         it "creates a Pact::Response object from the given hash" do
           expect(Pact::Response).to receive(:new).with(response)

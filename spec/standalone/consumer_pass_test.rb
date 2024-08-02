@@ -41,6 +41,7 @@ describe StandaloneClient, pact: true do
       standalone_service.
         upon_receiving("a request to create something").with(method: 'post', path: '/something', body: expected_body).
         will_respond_with(status: 200, headers: {}, body: response_body)
+        @mock_server_port = standalone_service.start_mock
     end
 
     it "will pass" do

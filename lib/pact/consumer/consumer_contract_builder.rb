@@ -3,6 +3,10 @@ require 'json/add/regexp'
 require 'pact/logging'
 require 'pact/mock_service/client'
 require 'pact/consumer/interaction_builder'
+require 'pact/ffi'
+require 'pact/ffi/logger'
+require 'pact/ffi/http_consumer'
+require 'pact/ffi/mock_server'
 
 module Pact
   module Consumer
@@ -23,6 +27,13 @@ module Pact
         }
         @mock_service_client = Pact::MockService::Client.new(attributes[:port], attributes[:host])
         @mock_service_base_url = "http://#{attributes[:host]}:#{attributes[:port]}"
+        PactFfi::Logger.log_to_stdout(4)
+        @mock_server_port = attributes[:mock_server_port] ||= 0
+        @mock_server_host = attributes[:host]
+        PactFfi::Logger.message('pact-ruby-fiddle', 'INFO', 'foo')
+        @pact = PactFfi.new_pact(@consumer_contract_details[:consumer][:name] + '-v3',
+                                 @consumer_contract_details[:provider][:name] + '-v3')
+        PactFfi::HttpConsumer.with_specification(@pact, PactFfi::FfiSpecificationVersion['SPECIFICATION_VERSION_V2'])
       end
 
       def without_writing_to_pact
@@ -45,7 +56,17 @@ module Pact
         mock_service_client.log msg
       end
 
+      def start_mock
+        @mock_server_port = PactFfi::MockServer.create_for_transport(@pact, @mock_server_host, @mock_server_port,
+                                                                     'http', nil)
+      end
+
       def write_pact
+        if @mock_server_port
+          PactFfi::MockServer.write_pact_file(@mock_server_port, @consumer_contract_details[:pact_dir], true)
+        else
+          puts 'rust mock server is not running'
+        end
         mock_service_client.write_pact @consumer_contract_details
       end
 
@@ -70,7 +91,7 @@ module Pact
       def interaction_builder
         @interaction_builder ||=
         begin
-          interaction_builder = InteractionBuilder.new do | interaction |
+          interaction_builder = InteractionBuilder.new(@pact) do |interaction|
             handle_interaction_fully_defined(interaction)
           end
           interaction_builder

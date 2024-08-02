@@ -37,6 +37,7 @@ describe "A service consumer side of a pact", :pact => true  do
         },
         body: term(/Mallory/, body)
       )
+      @mock_server_port = zebra_service.start_mock
 
       response = Faraday.get(zebra_service.mock_service_base_url + "/mallory", nil, {'Accept' => 'text/html'})
       expect(response.body).to eq body

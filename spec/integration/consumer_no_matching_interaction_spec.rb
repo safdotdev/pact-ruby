@@ -38,6 +38,7 @@ describe "A service consumer side of a pact", :pact => true  do
       .upon_receiving("a request that will not be properly matched")
       .with(method: 'get', path: '/path', body: {a: 'some body'}, headers: {'Content-Type' => 'application/json'})
       .will_respond_with(status: 200)
+      @mock_server_port = mary_service.start_mock
 
       uri = URI('http://localhost:1236/path')
       post_req = Net::HTTP::Get.new(uri.path)

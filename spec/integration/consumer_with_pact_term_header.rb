@@ -29,7 +29,7 @@ describe "A service consumer side of a pact", :pact => true  do
           }
         ).
         will_respond_with(status: 200)
-
+      @mock_server_port = another_zebra_service_for_term_header.start_mock
       response = Faraday.put(another_zebra_service_for_term_header.mock_service_base_url + "/alligators/John", nil, {'Content-Type' => 'foo/json'})
       expect(response.status).to eq 200
     end

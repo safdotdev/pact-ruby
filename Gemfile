@@ -14,6 +14,7 @@ gem "rspec-mocks", "3.10.2"
 gem "appraisal", "~> 2.5"
 
 if ENV['X_PACT_DEVELOPMENT']
+  gem "pact-ffi", path: '../pact-ruby-ffi'
   gem "pact-support", path: '../pact-support'
   gem "pact-mock_service", path: '../pact-mock_service'
   gem "pry-byebug"

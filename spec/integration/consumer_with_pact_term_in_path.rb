@@ -26,6 +26,7 @@ describe "A service consumer side of a pact", :pact => true  do
           path: term(/alligators\/.*/, '/alligators/Mary'),
         ).
         will_respond_with(status: 200)
+      @mock_server_port = another_zebra_service.start_mock
 
       response = Faraday.get(another_zebra_service.mock_service_base_url + "/alligators/John")
       expect(response.status).to eq 200

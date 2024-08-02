@@ -11,13 +11,15 @@ module Pact
 
         extend Pact::DSL
 
-        attr_accessor :port, :host, :standalone, :verify, :provider_name, :consumer_name, :pact_specification_version
+        attr_accessor :port, :mock_server_port, :host, :standalone, :verify, :provider_name, :consumer_name,
+                      :pact_specification_version
 
         def initialize name, consumer_name, provider_name
           @name = name
           @consumer_name = consumer_name
           @provider_name = provider_name
           @port = nil
+          @mock_server_port = nil
           @host = "localhost"
           @standalone = false
           @verify = true
@@ -28,6 +30,10 @@ module Pact
         dsl do
           def port port
             self.port = port
+          end
+
+          def mock_server_port(mock_server_port)
+            self.mock_server_port = mock_server_port
           end
 
           def host host
@@ -79,6 +85,7 @@ module Pact
             :pactfile_write_mode => Pact.configuration.pactfile_write_mode,
             :port => port,
             :host => host,
+            :mock_server_port => mock_server_port,
             :pact_dir => Pact.configuration.pact_dir
           }
           Pact::Consumer::ConsumerContractBuilder.new consumer_contract_builder_fields

@@ -74,7 +74,8 @@ describe "A service consumer side of a pact", :pact => true  do
             status: 200,
             body: [{"name" => "Roger", "age" => 20}]
         })
-
+        @alice_mock_server_port = alice_service.start_mock
+        @bob_mock_server_port = bob_service.start_mock
 
         alice_response = Net::HTTP.get_response(URI('http://localhost:8888/mallory'))
 

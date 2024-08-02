@@ -33,6 +33,7 @@ describe "A service consumer side of a pact", :pact => true  do
       .upon_receiving("an identical request")
       .with(method: 'get', path: '/path', body: {a: 'some body'}, headers: {'Content-Type' => 'application/json'})
       .will_respond_with(status: 200)
+      @mock_server_port = mary_service.start_mock
 
       uri = URI('http://localhost:1237/path')
       post_req = Net::HTTP::Get.new(uri.path)

@@ -52,7 +52,8 @@ describe "A consumer with a file upload", :pact => true  do
         will_respond_with({
         status: 200
       })
-
+      mock_server_port = file_upload_service.start_mock
+      puts "rust mock server running on: #{mock_server_port}"
       do_request
 
       file_upload_service.verify("when the content matches")
@@ -74,7 +75,8 @@ describe "A consumer with a file upload", :pact => true  do
         will_respond_with({
         status: 200
       })
-
+      mock_server_port = file_upload_service.start_mock
+      puts "rust mock server running on: #{mock_server_port}"
       do_request
 
       expect { file_upload_service.verify("when the content matches") }.to raise_error /do not match/

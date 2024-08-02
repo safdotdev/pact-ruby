@@ -50,6 +50,7 @@ describe "A service consumer side of a pact", :pact => true  do
           headers: { 'Content-Type' => 'application/json' },
           body: term(/Mallory/, body)
         )
+      @mock_server_port = zebra_service2.start_mock
     end
 
     it "matches when all instances are provided" do
@@ -105,6 +106,7 @@ describe "A service consumer side of a pact", :pact => true  do
           headers: { 'Content-Type' => 'application/json' },
           body: term(/Mallory/, body)
       })
+      @mock_server_port = zebra_service.start_mock
     end
 
     let(:response) do

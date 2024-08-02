@@ -7,12 +7,13 @@ module Pact
 
         extend Pact::DSL
 
-        attr_accessor :app, :port, :name
+        attr_accessor :app, :port, :mock_server_port, :name
 
         def initialize name
           @name = name
           @app = nil
           @port = nil
+          @mock_server_port = nil
         end
 
         dsl do
@@ -22,6 +23,10 @@ module Pact
 
           def port port
             self.port = port
+          end
+
+          def mock_server_port(mock_server_port)
+            self.mock_server_port = mock_server_port
           end
 
           def has_pact_with service_provider_name, &block

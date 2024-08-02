@@ -36,7 +36,7 @@ describe "A service consumer side of a pact", :pact => true  do
         will_respond_with({
           status: 200
       })
-
+      @mock_server_port = zebra_service_3.start_mock
     end
 
     let(:url) { zebra_service_3.mock_service_base_url + "/mallory" }

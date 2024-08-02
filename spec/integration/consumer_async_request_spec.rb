@@ -28,6 +28,7 @@ describe "A service consumer side of a pact", :pact => true  do
              path: '/mallory'
       }).
         will_respond_with({status: 200})
+      @mock_server_port = zebra_service.start_mock
 
       async_interaction { Net::HTTP.get_response(URI('http://localhost:1239/mallory')) }
 
