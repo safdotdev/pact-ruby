@@ -18,8 +18,9 @@ if ENV['X_PACT_DEVELOPMENT']
   gem "pact-support", path: '../pact-support'
   # gem "pact-mock_service", path: '../pact-mock_service'
   gem "pry-byebug"
+else
+  gem 'pact-support', '~> 1.16', '>= 1.16.9', git: 'https://github.com/safdotdev/pact-support.git', branch: 'feat/ffi'
 end
-gem 'pact-support', '~> 1.16', '>= 1.16.9', git: 'https://github.com/safdotdev/pact-support.git', branch: 'feat/ffi'
 # gem 'pact-ruby-ffi', '>=0.4.22', git: 'https://github.com/safdotdev/pact-ruby-ffi.git', branch: 'feat/ffi'
 
 

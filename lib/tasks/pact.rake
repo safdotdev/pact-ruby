@@ -22,7 +22,7 @@ namespace :pact do
 
     abort(::Term::ANSIColor.red("Please provide a pact URI. eg. rake pact:verify:at[../my-consumer/spec/pacts/my_consumer-my_provider.json]")) unless args[:pact_uri]
     handle_verification_failure do
-      execute_pact_verify args[:pact_uri]
+      execute_pact_verify(args[:pact_uri],args[:provider_base_url])
     end
   end
 

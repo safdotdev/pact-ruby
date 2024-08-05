@@ -11,8 +11,8 @@ module Pact
 
     extend self
 
-    def execute_pact_verify pact_uri = nil, pact_helper = nil, rspec_opts = nil, verification_opts = {}
-      execute_cmd verify_command(pact_helper || Pact::Provider::PactHelperLocater.pact_helper_path, pact_uri, rspec_opts, verification_opts)
+    def execute_pact_verify pact_uri = nil, pact_helper = nil, provider_base_url = nil, rspec_opts = nil, verification_opts = {}
+      execute_cmd verify_command(pact_helper || Pact::Provider::PactHelperLocater.pact_helper_path, pact_uri, provider_base_url, rspec_opts, verification_opts)
     end
 
     def handle_verification_failure
@@ -20,7 +20,7 @@ module Pact
       abort if exit_status != 0
     end
 
-    def verify_command pact_helper, pact_uri, rspec_opts, verification_opts
+    def verify_command pact_helper, pact_uri, provider_base_url, rspec_opts, verification_opts
       command_parts = []
       # Clear SPEC_OPTS, otherwise we can get extra formatters, creating duplicate output eg. CI Reporting.
       # Allow deliberate configuration using rspec_opts in VerificationTask.
@@ -29,6 +29,7 @@ module Pact
       command_parts << "-S pact verify"
       command_parts << "--pact-helper" << Shellwords.escape(pact_helper.end_with?(".rb") ? pact_helper : pact_helper + ".rb")
       (command_parts << "--pact-uri" << pact_uri) if pact_uri
+      (command_parts << "--provider-base-url" << provider_base_url) if provider_base_url
       command_parts << "--ignore-failures" if verification_opts[:ignore_failures]
       command_parts << "--pact-broker-username" << ENV['PACT_BROKER_USERNAME'] if ENV['PACT_BROKER_USERNAME']
       command_parts << "--pact-broker-password" << ENV['PACT_BROKER_PASSWORD'] if ENV['PACT_BROKER_PASSWORD']
