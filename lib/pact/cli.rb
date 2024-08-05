@@ -11,7 +11,7 @@ module Pact
     desc 'verify', "Verify a pact"
     method_option :pact_helper, aliases: "-h", desc: "Pact helper file", :required => true
     method_option :pact_uri, aliases: "-p", desc: "Pact URI"
-    method_option :provider_base_url, desc: "Provider Base URI"
+    method_option :provider_base_url, desc: "Provider Base URI", :required => true
     method_option :ignore_failures, type: :boolean, default: false, desc: "Process will always exit with exit code 0", hide: true
     method_option :pact_broker_username, aliases: "-u", desc: "Pact broker user name"
     method_option :pact_broker_password, aliases: "-w", desc: "Pact broker password"

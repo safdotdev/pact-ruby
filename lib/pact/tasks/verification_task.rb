@@ -32,6 +32,7 @@ module Pact
     attr_accessor :rspec_opts
     attr_accessor :ignore_failures
     attr_accessor :_pact_helper
+    attr_accessor :provider_base_url
 
     def initialize(name)
       @rspec_opts = nil
@@ -48,6 +49,9 @@ module Pact
 
     def uri(uri, options = {})
       @pact_spec_configs << {uri: uri, pact_helper: options[:pact_helper]}
+    end
+    def provider_base_url(provider_base_url, options = {})
+      @pact_spec_configs << {provider_base_url: provider_base_url, uri: options[:uri], pact_helper: options[:pact_helper]}
     end
 
     private

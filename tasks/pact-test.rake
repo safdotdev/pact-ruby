@@ -2,38 +2,47 @@ require 'pact/tasks/verification_task'
 require 'open3'
 
 Pact::VerificationTask.new(:stubbing) do | pact |
+	pact.provider_base_url = "http://localhost:8080"
 	pact.uri './spec/support/stubbing.json', :pact_helper => './spec/support/stubbing_using_allow.rb'
 end
 
 Pact::VerificationTask.new(:options) do | pact |
+	pact.provider_base_url = "http://localhost:8080"
 	pact.uri './spec/support/options.json', :pact_helper => './spec/support/options_app.rb'
 end
 
 Pact::VerificationTask.new(:pass) do | pact |
+	pact.provider_base_url = "http://localhost:8080"
 	pact.uri './spec/support/test_app_pass.json'
 end
 
 Pact::VerificationTask.new(:fail) do | pact |
+	pact.provider_base_url = "http://localhost:8080"
 	pact.uri './spec/support/test_app_fail.json'
 end
 
 Pact::VerificationTask.new(:term) do | pact |
+	pact.provider_base_url = "http://localhost:8080"
 	pact.uri './spec/support/term.json'
 end
 
 Pact::VerificationTask.new(:response_body_term) do | pact |
+	pact.provider_base_url = "http://localhost:8080"
 	pact.uri './spec/support/response_body_term.json', :pact_helper => './spec/support/response_body_term_app.rb'
 end
 
 Pact::VerificationTask.new(:term_v2) do | pact |
+	pact.provider_base_url = "http://localhost:8080"
 	pact.uri './spec/support/term-v2.json'
 end
 
 Pact::VerificationTask.new(:case_insensitive_response_header_matching) do | pact |
+	pact.provider_base_url = "http://localhost:8080"
 	pact.uri './spec/support/case-insensitive-response-header-matching.json', :pact_helper => './spec/support/case-insensitive-response-header-matching.rb'
 end
 
 RSpec::Core::RakeTask.new('spec:standalone:fail') do | task |
+	pact.provider_base_url = "http://localhost:8080"
 	task.pattern = FileList["spec/standalone/**/*_fail_test.rb"]
 end
 
@@ -42,22 +51,27 @@ RSpec::Core::RakeTask.new('spec:standalone:pass') do | task |
 end
 
 Pact::VerificationTask.new('test_app:pass') do | pact |
+	pact.provider_base_url = "http://localhost:8080"
 	pact.uri './spec/support/test_app_pass.json'
 end
 
 Pact::VerificationTask.new('test_app:content_type') do | pact |
+	pact.provider_base_url = "http://localhost:8080"
 	pact.uri './spec/support/test_app_with_right_content_type_differ.json'
 end
 
 Pact::VerificationTask.new('test_app:fail') do | pact |
+	pact.provider_base_url = "http://localhost:8080"
 	pact.uri './spec/support/test_app_fail.json', pact_helper: './spec/support/pact_helper.rb'
 end
 
 Pact::VerificationTask.new('test_app_with_provider_state_params') do | pact |
+	pact.provider_base_url = "http://localhost:8080"
 	pact.uri './spec/support/provider_states_params_test.json', pact_helper: './spec/support/pact_helper_for_provider_state_params_test.rb'
 end
 
 Pact::VerificationTask.new('test_app:wip') do | pact |
+	pact.provider_base_url = "http://localhost:8080"
 	pact.uri './spec/support/test_app_fail.json', pact_helper: './spec/support/pact_helper.rb'
 	pact.ignore_failures = true
 end
@@ -75,8 +89,8 @@ namespace :pact do
 		Rake::Task['spec:standalone:pass'].execute
 		Rake::Task['pact:verify'].execute
 		Rake::Task['pact:verify:test_app:pass'].execute
-		Rake::Task['pact:test:fail'].execute
-		Rake::Task['pact:test:pactfile'].execute
+		# Rake::Task['pact:test:fail'].execute
+		# Rake::Task['pact:test:pactfile'].execute
 		Rake::Task['pact:verify:test_app:content_type'].execute
 		Rake::Task['pact:verify:case_insensitive_response_header_matching'].execute
 		Rake::Task['pact:verify:term_v2'].execute

@@ -27,7 +27,7 @@ module Pact
           pact_dir: attributes.fetch(:pact_dir)
         }
         # @mock_service_client = Pact::MockService::Client.new(attributes[:port], attributes[:host])
-        PactFfi::Logger.log_to_stdout(5)
+        PactFfi::Logger.log_to_stdout(3)
         @port = attributes[:port] ||= 0
         @mock_service_base_url = "http://#{attributes[:host]}:#{@port}"
         @mock_server_host = attributes[:host]

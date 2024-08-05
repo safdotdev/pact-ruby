@@ -58,7 +58,9 @@ describe Pact::PactBroker::FetchPactURIsForVerification, pact: true do
           }
         )
     end
-
+    after do
+      pact_broker.cleanup
+    end
     context 'retrieving pacts for verification by provider' do
       before do
         pact_broker
@@ -90,8 +92,11 @@ describe Pact::PactBroker::FetchPactURIsForVerification, pact: true do
               }
             }
           )
+        pact_broker.start_mock
       end
-
+      after do
+        pact_broker.cleanup
+      end
       let(:expected_metadata) do
         {
           pending: true,
