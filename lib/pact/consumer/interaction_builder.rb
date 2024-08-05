@@ -39,15 +39,23 @@ module Pact
 
       def with(request_details)
         if request_details[:query]
-          request_details[:query].each do |k, v|
+          puts request_details[:query]
+          puts request_details[:query].class
+          query_params = CGI.parse(request_details[:query])
+          puts query_params
+          # request_details[:query] = Hash[query_params.map { |k, v| [k.split('=').first, v.split('=').last] }]
+          # puts request_details[:query]
+          query_params.each do |k, v|
+            if v.nil? || v.empty?
+              v = k.to_s.split('=').last
+              k = k.to_s.split('=').first
+            end
             key = k
             val = v.to_json
             if v.instance_of?(Array)
               array = JSON.parse(val.to_s)
-              array.each_with_index do |vv,i|
-                if vv.is_a?(Hash)
-                  vv = vv.to_json
-                end
+              array.each_with_index do |vv, i|
+                vv = vv.to_json if vv.is_a?(Hash)
                 PactFfi.with_query_parameter_v2(@interaction_ffi, key.to_s, i, vv)
               end
             else
