@@ -16,9 +16,12 @@ gem "appraisal", "~> 2.5"
 if ENV['X_PACT_DEVELOPMENT']
   gem "pact-ffi", path: '../pact-ruby-ffi'
   gem "pact-support", path: '../pact-support'
-  gem "pact-mock_service", path: '../pact-mock_service'
+  # gem "pact-mock_service", path: '../pact-mock_service'
   gem "pry-byebug"
 end
+gem 'pact-support', '~> 1.16', '>= 1.16.9', git: 'https://github.com/safdotdev/pact-support.git', branch: 'feat/ffi'
+# gem 'pact-ruby-ffi', '>=0.4.22', git: 'https://github.com/safdotdev/pact-ruby-ffi.git', branch: 'feat/ffi'
+
 
 group :local_development do
   gem "pry-byebug"
