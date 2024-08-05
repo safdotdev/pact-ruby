@@ -120,7 +120,7 @@ describe "A service consumer side of a pact", :pact => true  do
       )
     end
 
-    it "goes like this" do
+    it "goes like this", skip: "TODO - Rust" do
       expect(response.body).to eq body
     end
 

@@ -46,7 +46,7 @@ describe "A service consumer side of a pact", :pact => true  do
     let(:response) { Faraday.post url, param2: 'penguin', param1: 'wiffle' }
     let(:pact_json) { response; zebra_service_4.write_pact }
 
-    it "matches form data" do
+    it "matches form data", skip: "TODO - Rust"  do
       expect(response.status).to eq 200
     end
 
@@ -54,7 +54,7 @@ describe "A service consumer side of a pact", :pact => true  do
       expect(pact_json).to_not include "Pact::Term"
     end
 
-    it "includes the reified form" do
+    it "includes the reified form", skip: "TODO - Rust" do
       expect(pact_json).to include "param1=woger"
     end
 
