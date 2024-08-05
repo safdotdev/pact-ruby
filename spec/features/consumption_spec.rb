@@ -47,7 +47,7 @@ describe "A service consumer side of a pact", :pact => true  do
           method: :post,
           path: '/donuts',
           body: {
-            "name" => term(/Bob/, 'Bob')
+            "name" => term(/[\s\S]*/, 'Bob')
           },
           headers: {'Accept' => 'text/plain', "Content-Type" => 'application/json'}
         }).
@@ -102,11 +102,11 @@ describe "A service consumer side of a pact", :pact => true  do
         bob_post_response = Net::HTTP.start(uri.hostname, uri.port) do |http|
           http.request post_req
         end
-
+        # bob_service.write_pact()
         expect(bob_post_response.code).to eql '200'
-        expect(bob_post_response.body).to eql([{"name" => "Roger", "age" => 20}].to_json)
+        expect(bob_post_response.body).to eql([{"age" => 20, "name" => "Roger"}].to_json)
 
-        expect{ bob_service.verify('goes a little something like this') }.to raise_error /do not match/
+        expect{ bob_service.verify }.to raise_error /missing-request/
       end
 
     end

@@ -9,7 +9,7 @@ module Pact::Consumer::Configuration
     let(:port_number) { 8888 }
     before do
       Pact.clear_configuration
-      allow(Pact::MockService::AppManager.instance).to receive(:register_mock_service_for).and_return(port_number)
+      # allow(Pact::MockService::AppManager.instance).to receive(:register_mock_service_for).and_return(port_number)
       allow(Pact).to receive(:consumer_world).and_return(world)
     end
 
@@ -34,52 +34,52 @@ module Pact::Consumer::Configuration
         Pact.configuration.provider_verifications.first.call
       end
 
-      context "when standalone" do
-        it "does not register the app with the AppManager" do
-          expect(Pact::MockService::AppManager.instance).to_not receive(:register_mock_service_for)
-          subject
-        end
-      end
-      context "when not standalone" do
-        subject {
-          MockService.build :mock_service, consumer_name, provider_name do
-            port port_number
-            standalone false
-            verify true
-            pact_specification_version '1'
-          end
-        }
-        it "registers the app with the AppManager" do
-          expect(Pact::MockService::AppManager.instance).to receive(:register_mock_service_for).
-            with(provider_name, url, pact_specification_version: '1', find_available_port: false).
-            and_return(port_number)
-          subject
-        end
-      end
+      # context "when standalone" do
+      #   it "does not register the app with the AppManager" do
+      #     expect(Pact::MockService::AppManager.instance).to_not receive(:register_mock_service_for)
+      #     subject
+      #   end
+      # end
+      # context "when not standalone" do
+      #   subject {
+      #     MockService.build :mock_service, consumer_name, provider_name do
+      #       port port_number
+      #       standalone false
+      #       verify true
+      #       pact_specification_version '1'
+      #     end
+      #   }
+      #   it "registers the app with the AppManager" do
+      #     expect(Pact::MockService::AppManager.instance).to receive(:register_mock_service_for).
+      #       with(provider_name, url, pact_specification_version: '1', find_available_port: false).
+      #       and_return(port_number)
+      #     subject
+      #   end
+      # end
 
-      context "without port specification" do
-        let(:url) { 'http://localhost' }
-        subject { MockService.build(:mock_service, consumer_name, provider_name) {} }
+      # context "without port specification" do
+      #   let(:url) { 'http://localhost' }
+      #   subject { MockService.build(:mock_service, consumer_name, provider_name) {} }
 
-        it "registers the app with the AppManager with find_available_port option" do
-          expect(Pact::MockService::AppManager.instance).to receive(:register_mock_service_for).
-            with(provider_name, url, pact_specification_version: '2', find_available_port: true).
-            and_return(port_number)
-          subject
-        end
-      end
+      #   it "registers the app with the AppManager with find_available_port option" do
+      #     expect(Pact::MockService::AppManager.instance).to receive(:register_mock_service_for).
+      #       with(provider_name, url, pact_specification_version: '2', find_available_port: true).
+      #       and_return(port_number)
+      #     subject
+      #   end
+      # end
 
-      context "without port specification and old pact-mock_service" do
-        let(:url) { 'http://localhost' }
-        subject { MockService.build(:mock_service, consumer_name, provider_name) {} }
+      # context "without port specification and old pact-mock_service" do
+      #   let(:url) { 'http://localhost' }
+      #   subject { MockService.build(:mock_service, consumer_name, provider_name) {} }
 
-        it "checks and raises an error" do
-          expect(Pact::MockService::AppManager.instance).to receive(:register_mock_service_for).
-            with(provider_name, url, pact_specification_version: '2', find_available_port: true).
-            and_return(nil)
-          expect { subject }.to raise_error(/pact-mock_service.+does not support/)
-        end
-      end
+      #   it "checks and raises an error" do
+      #     expect(Pact::MockService::AppManager.instance).to receive(:register_mock_service_for).
+      #       with(provider_name, url, pact_specification_version: '2', find_available_port: true).
+      #       and_return(nil)
+      #     expect { subject }.to raise_error(/pact-mock_service.+does not support/)
+      #   end
+      # end
     end
   end
 end

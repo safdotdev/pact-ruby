@@ -17,7 +17,7 @@ describe "A service consumer side of a pact", :pact => true  do
       Pact.service_consumer "Consumer" do
         has_pact_with "Zebra Service" do
           mock_service :zebra_service_4 do
-            port 1245
+            port 8888
           end
         end
       end

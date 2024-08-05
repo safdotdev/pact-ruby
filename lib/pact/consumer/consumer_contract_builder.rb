@@ -1,12 +1,13 @@
 require 'uri'
 require 'json/add/regexp'
 require 'pact/logging'
-require 'pact/mock_service/client'
+# require 'pact/mock_service/client'
 require 'pact/consumer/interaction_builder'
 require 'pact/ffi'
 require 'pact/ffi/logger'
 require 'pact/ffi/http_consumer'
 require 'pact/ffi/mock_server'
+require 'pact/errors'
 
 module Pact
   module Consumer
@@ -15,24 +16,23 @@ module Pact
 
       include Pact::Logging
 
-      attr_reader :consumer_contract, :mock_service_base_url
+      attr_reader :consumer_contract, :mock_service_base_url, :port
 
       def initialize(attributes)
         @interaction_builder = nil
         @consumer_contract_details = {
-          consumer: {name: attributes[:consumer_name]},
-          provider: {name: attributes[:provider_name]},
+          consumer: { name: attributes[:consumer_name] },
+          provider: { name: attributes[:provider_name] },
           pactfile_write_mode: attributes[:pactfile_write_mode].to_s,
           pact_dir: attributes.fetch(:pact_dir)
         }
-        @mock_service_client = Pact::MockService::Client.new(attributes[:port], attributes[:host])
-        @mock_service_base_url = "http://#{attributes[:host]}:#{attributes[:port]}"
-        PactFfi::Logger.log_to_stdout(4)
-        @mock_server_port = attributes[:mock_server_port] ||= 0
+        # @mock_service_client = Pact::MockService::Client.new(attributes[:port], attributes[:host])
+        PactFfi::Logger.log_to_stdout(5)
+        @port = attributes[:port] ||= 0
+        @mock_service_base_url = "http://#{attributes[:host]}:#{@port}"
         @mock_server_host = attributes[:host]
-        PactFfi::Logger.message('pact-ruby-fiddle', 'INFO', 'foo')
-        @pact = PactFfi.new_pact(@consumer_contract_details[:consumer][:name] + '-v3',
-                                 @consumer_contract_details[:provider][:name] + '-v3')
+        @pact = PactFfi.new_pact(@consumer_contract_details[:consumer][:name],
+                                 @consumer_contract_details[:provider][:name])
         PactFfi::HttpConsumer.with_specification(@pact, PactFfi::FfiSpecificationVersion['SPECIFICATION_VERSION_V2'])
       end
 
@@ -48,44 +48,70 @@ module Pact
         interaction_builder.upon_receiving(description)
       end
 
-      def verify example_description
-        mock_service_client.verify example_description
+      def verify
+        matched = PactFfi::MockServer.matched(@port)
+        puts matched
+        return unless matched != true
+
+        mismatches = PactFfi::MockServer.mismatches(@port)
+        if mismatches
+          validation_errors = JSON.pretty_generate(JSON.load(mismatches))
+        else
+          validation_errors = 'do not match'
+        end
+        PactFfi::MockServer.cleanup(@port)
+        raise validation_errors
       end
 
-      def log msg
-        mock_service_client.log msg
+      def log(msg)
+        # mock_service_client.log msg
       end
 
       def start_mock
-        @mock_server_port = PactFfi::MockServer.create_for_transport(@pact, @mock_server_host, @mock_server_port,
-                                                                     'http', nil)
+        @port = PactFfi::MockServer.create_for_transport(@pact, @mock_server_host, @port,
+                                                         'http', nil)
       end
 
       def write_pact
-        if @mock_server_port
-          PactFfi::MockServer.write_pact_file(@mock_server_port, @consumer_contract_details[:pact_dir], true)
+        if @port
+          result = PactFfi::MockServer.write_pact_file(@port, @consumer_contract_details[:pact_dir], true)
+
+          pact_file_path = File.join(@consumer_contract_details[:pact_dir], "#{@consumer_contract_details[:consumer][:name]}-#{@consumer_contract_details[:provider][:name]}.json")
+          pact_file_contents = File.read(pact_file_path)
+          # puts pact_file_contents
+          if result != 0
+            case result
+            when 1
+              puts "Error: A general panic was caught"
+            when 2
+              puts "Error: The pact file was not able to be written"
+            when 3
+              puts "Error: A mock server with the provided port #{@port} was not found"
+            end
+          end
+          pact_file_contents
         else
           puts 'rust mock server is not running'
         end
-        mock_service_client.write_pact @consumer_contract_details
+      end
+
+      def cleanup
+        PactFfi::MockServer.cleanup(@port)
       end
 
       def wait_for_interactions options = {}
         wait_max_seconds = options.fetch(:wait_max_seconds, 3)
         poll_interval = options.fetch(:poll_interval, 0.1)
-        mock_service_client.wait_for_interactions wait_max_seconds, poll_interval
       end
 
       # @raise Pact::InvalidInteractionError
       def handle_interaction_fully_defined interaction
         interaction.validate!
-        mock_service_client.add_expected_interaction interaction #TODO: What will happen if duplicate added?
         self.interaction_builder = nil
       end
 
       private
 
-      attr_reader :mock_service_client
       attr_writer :interaction_builder
 
       def interaction_builder

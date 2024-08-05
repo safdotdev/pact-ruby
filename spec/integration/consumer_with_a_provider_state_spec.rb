@@ -41,9 +41,12 @@ describe "A service consumer side of a pact", :pact => true  do
 
       response = Faraday.get(zebra_service.mock_service_base_url + "/mallory", nil, {'Accept' => 'text/html'})
       expect(response.body).to eq body
+      expect(response.headers['Content-Type']).to eq 'text/html'
       expect(response.headers['Zebra-Origin']).to eq zebra_header
-
+      # TODO - WARN: Ignoring unsupported matching rules {"match"=>"regex", "regex"=>"\\*"} for path $['header']['Zebra-Origin']
+      # fixed by https://github.com/pact-foundation/pact-reference/commit/77814aef9498d029616ac9bbd2f42dce54fe7902
       interactions = Pact::ConsumerContract.from_json(zebra_service.write_pact).interactions
+      puts interactions
       expect(interactions.first.provider_state).to eq("the_zebras_are_here")
     end
   end

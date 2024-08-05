@@ -1,5 +1,5 @@
-require 'pact/mock_service/version'
-require 'pact/mock_service/app_manager'
+# require 'pact/mock_service/version'
+# require 'pact/mock_service/app_manager'
 require 'pact/consumer/consumer_contract_builder'
 require 'pact/consumer/consumer_contract_builders'
 require 'pact/consumer/world'
@@ -11,7 +11,7 @@ module Pact
 
         extend Pact::DSL
 
-        attr_accessor :port, :mock_server_port, :host, :standalone, :verify, :provider_name, :consumer_name,
+        attr_accessor :port, :host, :standalone, :verify, :provider_name, :consumer_name,
                       :pact_specification_version
 
         def initialize name, consumer_name, provider_name
@@ -19,7 +19,6 @@ module Pact
           @consumer_name = consumer_name
           @provider_name = provider_name
           @port = nil
-          @mock_server_port = nil
           @host = "localhost"
           @standalone = false
           @verify = true
@@ -30,10 +29,6 @@ module Pact
         dsl do
           def port port
             self.port = port
-          end
-
-          def mock_server_port(mock_server_port)
-            self.mock_server_port = mock_server_port
           end
 
           def host host
@@ -55,21 +50,25 @@ module Pact
 
         def finalize
           raise 'Already finalized!' if @finalized
-          register_mock_service
+          # register_mock_service
           configure_consumer_contract_builder
           @finalized = true
         end
 
         private
 
-        def register_mock_service
-          unless standalone
-            url = "http://#{host}#{port.nil? ? '' : ":#{port}"}"
-            ret = Pact::MockService::AppManager.instance.register_mock_service_for(provider_name, url, mock_service_options)
-            raise "pact-mock_service(v#{Pact::MockService::VERSION}) does not support 'find available port' feature" unless ret
-            @port = ret
-          end
-        end
+        # def register_mock_service
+        #   return if standalone
+
+        #   url = "http://#{host}#{port.nil? ? '' : ":#{port}"}"
+        #   ret = Pact::MockService::AppManager.instance.register_mock_service_for(provider_name, url,
+        #                                                                          mock_service_options)
+        #   unless ret
+        #     raise "pact-mock_service(v#{Pact::MockService::VERSION}) does not support 'find available port' feature"
+        #   end
+
+        #   @port = ret
+        # end
 
         def configure_consumer_contract_builder
           consumer_contract_builder = create_consumer_contract_builder
@@ -85,7 +84,6 @@ module Pact
             :pactfile_write_mode => Pact.configuration.pactfile_write_mode,
             :port => port,
             :host => host,
-            :mock_server_port => mock_server_port,
             :pact_dir => Pact.configuration.pact_dir
           }
           Pact::Consumer::ConsumerContractBuilder.new consumer_contract_builder_fields
@@ -93,7 +91,7 @@ module Pact
 
         def setup_verification consumer_contract_builder
           Pact.configuration.add_provider_verification do | example_description |
-            consumer_contract_builder.verify example_description
+            consumer_contract_builder.verify
           end
         end
 

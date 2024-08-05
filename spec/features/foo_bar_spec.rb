@@ -19,7 +19,6 @@ describe "Bar", :pact => true do
             pact_specification_version "2"
             host "127.0.0.1"
             port 4638
-            mock_server_port 4637
           end
         end
       end
@@ -39,12 +38,10 @@ describe "Bar", :pact => true do
       mock_server_port = bar_service.start_mock
       puts "rust mock server running on: #{mock_server_port}"
       bar_response = Net::HTTP.get_response(URI('http://localhost:4638/thing'))
-      bar_response_rust = Net::HTTP.get_response(URI("http://localhost:#{mock_server_port}/thing"))
 
       expect(bar_response.code).to eql '200'
+      puts bar_response.body
       expect(JSON.parse(bar_response.body)).to eq "name" => "Thing 1"
-      expect(JSON.parse(bar_response_rust.body)).to eq 'name' => 'Thing 1'
-      expect(bar_response_rust.code).to eql '200'
       puts bar_service.write_pact
   end
 

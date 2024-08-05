@@ -7,13 +7,12 @@ module Pact
 
         extend Pact::DSL
 
-        attr_accessor :app, :port, :mock_server_port, :name
+        attr_accessor :app, :port, :name
 
         def initialize name
           @name = name
           @app = nil
           @port = nil
-          @mock_server_port = nil
         end
 
         dsl do
@@ -25,10 +24,6 @@ module Pact
             self.port = port
           end
 
-          def mock_server_port(mock_server_port)
-            self.mock_server_port = mock_server_port
-          end
-
           def has_pact_with service_provider_name, &block
             ServiceProvider.build(service_provider_name, name, &block)
           end
@@ -36,7 +31,7 @@ module Pact
 
         def finalize
           validate
-          register_consumer_app if @app
+          # register_consumer_app if @app
         end
 
         private
