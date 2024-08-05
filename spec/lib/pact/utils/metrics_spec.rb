@@ -41,7 +41,7 @@ describe Pact::Utils::Metrics do
 
         expect(WebMock).to have_requested(:post, "https://www.google-analytics.com/collect").
           with(body: Rack::Utils.build_query(expected_event))
-      end
+      end unless ENV["PACT_DO_NOT_TRACK"]
     end
 
     context "when do not track is set to true" do
