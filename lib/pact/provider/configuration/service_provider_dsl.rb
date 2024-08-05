@@ -15,7 +15,8 @@ module Pact
 
         extend Pact::DSL
 
-        attr_accessor :name, :app_block, :application_version, :branch, :tags, :publish_verification_results, :build_url
+        attr_accessor :name, :app_block, :application_version, :branch, :tags, :publish_verification_results,
+                      :build_url, :provider_base_url
 
         CONFIG_RU_APP = lambda {
           unless File.exist? Pact.configuration.config_ru_path
@@ -33,6 +34,7 @@ module Pact
         def initialize name
           @name = name
           @publish_verification_results = false
+          @provider_base_url = provider_base_url
           @tags = []
           @app_block = CONFIG_RU_APP
         end
@@ -56,6 +58,10 @@ module Pact
 
           def build_url build_url
             self.build_url = build_url
+          end
+
+          def provider_base_url(provider_base_url)
+            self.provider_base_url = provider_base_url
           end
 
           def publish_verification_results publish_verification_results
@@ -92,14 +98,19 @@ module Pact
         def validate
           raise Error.new("Please provide a name for the Provider") unless name && !name.strip.empty?
           raise Error.new("Please set the app_version when publish_verification_results is true") if publish_verification_results && application_version_blank?
+          raise Error.new('Please set the provider_base_url') if provider_base_url_blank? && self.class == instance_of?(MessageProviderDSL)
         end
 
         def application_version_blank?
           application_version.nil? || application_version.strip.empty?
         end
+        def provider_base_url_blank?
+          provider_base_url.nil? || provider_base_url.strip.empty?
+        end
 
         def create_service_provider
-          Pact.configuration.provider = ServiceProviderConfig.new(application_version, branch, tags, publish_verification_results, build_url, &@app_block)
+          Pact.configuration.provider = ServiceProviderConfig.new(application_version, branch, tags,
+                                                                  publish_verification_results, build_url, provider_base_url, &@app_block)
         end
       end
     end

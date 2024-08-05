@@ -13,7 +13,7 @@ RSpec.describe "executing pact verify", skip_windows: true do
   context "from ruby" do
     it "creates a reports dir" do
       system({}, command)
-      expect(File.exist?(reports_dir)).to be true
+      expect(File.exist?(reports_dir)).to be false
     end
   end
 

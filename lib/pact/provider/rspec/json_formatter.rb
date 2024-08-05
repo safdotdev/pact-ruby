@@ -14,7 +14,7 @@ module Pact
         def format_example(example)
           {
             :id => example.id,
-            :interaction_index => example.metadata[:pact_interaction].index,
+            :interaction_index => example.metadata[:pact_interaction]&.index,
             :description => example.description,
             :full_description => example.full_description,
             :status => calculate_status(example),
@@ -22,7 +22,7 @@ module Pact
             :line_number  => example.metadata[:line_number],
             :run_time => example.execution_result.run_time,
             :mismatches => extract_differences(example),
-            :pact_url => example.metadata[:pact_uri].uri
+            :pact_url => example.metadata[:pact_uri]&.uri
           }
         end
 
@@ -61,19 +61,19 @@ module Pact
         def pacts(summary)
           unique_pact_metadatas(summary).collect do | example_metadata |
             pact_uri = example_metadata[:pact_uri]
-            notices = (pact_uri.metadata[:notices] && pact_uri.metadata[:notices].before_verification_notices) || []
+            notices = (pact_uri&.metadata&[:notices] && pact_ur.metadata[:notices].before_verification_notices) || []
             {
               notices: notices,
-              url: pact_uri.uri,
-              consumer_name: example_metadata[:pact_consumer_contract].consumer.name,
-              provider_name: example_metadata[:pact_consumer_contract].provider.name,
-              short_description: pact_uri.metadata[:short_description]
+              url: pact_uri&.uri,
+              consumer_name: example_metadata[:pact_consumer_contract]&.consumer&.name,
+              provider_name: example_metadata[:pact_consumer_contract]&.provider&.name,
+              short_description: pact_uri&.metadata&[:short_description]
             }
           end
         end
 
         def unique_pact_metadatas(summary)
-          summary.examples.collect(&:metadata).group_by{ | metadata | metadata[:pact_uri].uri }.values.collect(&:first)
+          summary.examples.collect(&:metadata).group_by{ | metadata | metadata[:pact_uri]&.uri }.values.collect(&:first)
         end
 
         def create_custom_summary(summary)

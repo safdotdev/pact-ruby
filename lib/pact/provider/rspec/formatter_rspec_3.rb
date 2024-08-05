@@ -47,7 +47,7 @@ module Pact
         def dump_summary(summary)
           output.puts "\n" + colorized_totals_line(summary)
           return if summary.failure_count == 0
-          print_rerun_commands summary
+          # print_rerun_commands summary
           print_failure_message
           print_missing_provider_states
         end
@@ -55,7 +55,8 @@ module Pact
         private
 
         def interactions_count(summary)
-          summary.examples.collect{ |e| interaction_unique_key(e) }.uniq.size
+          summary.examples.collect.uniq.size
+          # summary.examples.collect{ |e| interaction_unique_key(e) }.uniq.size
         end
 
         def failed_interactions_count(summary)
@@ -72,6 +73,7 @@ module Pact
 
         def totals_line summary
           line = ::RSpec::Core::Formatters::Helpers.pluralize(interactions_count(summary), "interaction")
+          # line = ::RSpec::Core::Formatters::Helpers.pluralize(interactions_count(summary), "pact source")
           line << ", " << failure_title(summary)
           pending_count = pending_interactions_count(summary)
           line << ", " << "#{pending_count} pending" if pending_count > 0
@@ -123,7 +125,8 @@ module Pact
         end
 
         def one_failed_example_per_interaction(summary)
-          summary.failed_examples.group_by{| e| interaction_unique_key(e)}.values.collect(&:first)
+          summary.failed_examples
+          # summary.failed_examples.group_by{| e| interaction_unique_key(e)}.values.collect(&:first)
         end
 
         def interaction_rerun_commands examples

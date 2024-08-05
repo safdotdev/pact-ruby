@@ -4,8 +4,10 @@ require 'pact/provider/rspec/matchers'
 require 'pact/provider/test_methods'
 require 'pact/provider/configuration'
 require 'pact/provider/matchers/messages'
-
-
+require 'pact/version'
+require 'pact/ffi'
+require 'pact/ffi/verifier'
+require 'pact/ffi/logger'
 module Pact
   module Provider
     module RSpec
@@ -22,21 +24,53 @@ module Pact
         include ::RSpec::Core::DSL
 
         def honour_pactfile pact_source, pact_json, options
+          # puts Pact.configuration.provider.provider_base_url
+          provider_base_uri = URI.parse(Pact.configuration.provider.provider_base_url)
+          provider_scheme = provider_base_uri.scheme
+          provider_hostname = provider_base_uri.hostname
+          provider_path = provider_base_uri.path
+          provider_port = provider_base_uri.port
+          # puts provider_base_uri
+          # puts provider_scheme
+          # puts provider_hostname
+          # puts provider_path
+          # puts provider_port
           pact_uri = pact_source.uri
           Pact.configuration.output_stream.puts "INFO: Reading pact at #{pact_uri}"
           consumer_contract = Pact::ConsumerContract.from_json(pact_json)
           suffix = pact_uri.metadata[:pending] ? " [PENDING]": ""
-          example_group_description = "Verifying a pact between #{consumer_contract.consumer.name} and #{consumer_contract.provider.name}#{suffix}"
+          example_group_description = ""
+          # example_group_description = "Verifying a pact between #{consumer_contract.consumer.name} and #{consumer_contract.provider.name}#{suffix}"
           example_group_metadata = { pactfile_uri: pact_uri, pact_criteria: options[:criteria] }
 
           ::RSpec.describe example_group_description, example_group_metadata do
-            honour_consumer_contract consumer_contract, options.merge(
+            # honour_consumer_contract consumer_contract, options.merge(
+            #   pact_json: pact_json,
+            #   pact_uri: pact_uri,
+            #   pact_source: pact_source,
+            #   consumer_contract: consumer_contract,
+            #   criteria: options[:criteria]
+            # )
+            options = options.merge(
               pact_json: pact_json,
               pact_uri: pact_uri,
               pact_source: pact_source,
               consumer_contract: consumer_contract,
               criteria: options[:criteria]
             )
+
+            it 'passes verification' do |_example|
+              # PactFfi::Logger.log_to_stdout(3)
+              verifier = PactFfi::Verifier.new_for_application('pact-ruby', Pact::VERSION)
+              PactFfi::Verifier.set_provider_info(verifier, consumer_contract.provider.name, provider_scheme,
+                                                  provider_hostname, provider_port, provider_path)
+              PactFfi::Verifier.add_file_source(verifier,
+                                                options[:pact_uri].to_s)
+              result = PactFfi::Verifier.execute(verifier)
+              PactFfi::Verifier.shutdown(verifier)
+              # PactFfi.cleanup_plugins(verifier)
+              raise "Failed verifier. The response was: #{result}" if result != 0
+            end
           end
         end
 
@@ -116,9 +150,11 @@ module Pact
             end
 
             if interaction.respond_to?(:message?) && interaction.message?
+              # this is where we call out to issue the response from a message provider
               describe_message Pact::Response.new(interaction.response), interaction_context
             else
               describe "with #{interaction.request.method_and_path}" do
+                # this is where we call out to issue the response from a http provider
                 describe_response Pact::Response.new(interaction.response), interaction_context
               end
             end

@@ -5,11 +5,11 @@ module Pact
     class RunPactVerification
       attr_reader :options
 
-      def initialize options
+      def initialize(options)
         @options = options
       end
 
-      def self.call options
+      def self.call(options)
         new(options).call
       end
 
@@ -45,6 +45,7 @@ module Pact
       end
 
       def run_specs
+        Pact.configuration.provider.provider_base_url = options[:provider_base_url]
         exit_code = if options[:pact_uri].is_a?(String)
           run_with_pact_url_string
         elsif options[:pact_uri]
