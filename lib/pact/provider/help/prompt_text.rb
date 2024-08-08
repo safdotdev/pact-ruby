@@ -29,6 +29,7 @@ module Pact
         end
 
         def prompt_text_colored
+          Rainbow.enabled = true
           Rainbow(prompt_text_plain).yellow
         end
 

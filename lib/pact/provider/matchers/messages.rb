@@ -35,6 +35,7 @@ module Pact
 
       def colorize_if_enabled formatted_diff, color_enabled
         if color_enabled
+          Rainbow.enabled = true
           # RSpec wraps each line in the failure message with failure_color, turning it red.
           # To ensure the lines in the diff that should be white, stay white, put an
           # ANSI reset at the start of each line.
