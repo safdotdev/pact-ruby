@@ -13,7 +13,7 @@ module Pact
         let(:message) { "line1\nline2"}
         let(:output_message) { "Actual: actual\n\n#{message}"}
         let(:r) { "\e[0m" }
-        let(:output_message_with_resets) { "Actual: \e[37mactual\e[0m\n\n#{r}line1\n#{r}line2"}
+        let(:output_message_with_resets) { "Actual: \e[37mactual#{r}\n\n#{r}line1\n#{r}line2"}
         let(:diff) { double("diff") }
         let(:actual) { "actual" }
         let(:color_enabled) { true }
