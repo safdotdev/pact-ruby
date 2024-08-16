@@ -123,7 +123,7 @@ module Pact
         let(:ignore_failures) { true }
         it "executes the command with --ignore-failures" do
           expect(TaskHelper).to receive(:execute_cmd).with(/ --ignore-failures\b/)
-          TaskHelper.execute_pact_verify(pact_uri, nil, nil, verification_options)
+          TaskHelper.execute_pact_verify(pact_uri, nil, nil, nil, verification_options)
         end
       end
 
@@ -162,7 +162,7 @@ module Pact
           expect(TaskHelper).to receive(:execute_cmd) do | command |
             expect(command).to start_with("SPEC_OPTS=--reporter\\ SomeReporter #{ruby_path}")
           end
-          TaskHelper.execute_pact_verify(pact_uri, nil, "--reporter SomeReporter")
+          TaskHelper.execute_pact_verify(pact_uri, nil, nil, "--reporter SomeReporter")
         end
       end
 

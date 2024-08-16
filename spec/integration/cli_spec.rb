@@ -73,7 +73,7 @@ describe "running the pact verify CLI", skip_windows: true do
 
     # TODO - https://github.com/pact-foundation/pact-reference/blob/033a50ab2cba937ab69567b68a42fdf17703f556/rust/pact_verifier/src/lib.rs#L1155
     # verification result does not use logging library
-    it "formats the output as json to stdout", skip: true do
+    it "formats the output as json to stdout", skip: "verification result does not use logging library" do
       output = `#{command}`
       expect(JSON.parse(output)["examples"].size).to eq 1
     end

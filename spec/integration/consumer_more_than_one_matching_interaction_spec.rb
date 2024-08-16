@@ -30,6 +30,7 @@ describe "A service consumer side of a pact", :pact => true  do
 
 
       mary_service
+      .given("something")
       .upon_receiving("an identical request")
       .with(method: 'get', path: '/path', body: {a: 'some body'}, headers: {'Content-Type' => 'application/json'})
       .will_respond_with(status: 200)

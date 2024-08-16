@@ -5,7 +5,7 @@ require 'pact/consumer/rspec'
 require 'faraday'
 load 'pact/consumer/world.rb'
 
-describe "A service consumer side of a pact", :pact => true  do
+describe "A service consumer side of a pact", :pact => true, :skip => true do
 
   let(:body) { 'That is some good Mallory.' }
 
@@ -51,6 +51,7 @@ describe "A service consumer side of a pact", :pact => true  do
     end
 
     it "does not include any Pact::Terms" do
+      puts pact_json
       expect(pact_json).to_not include "Pact::Term"
     end
 

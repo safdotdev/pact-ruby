@@ -1,7 +1,7 @@
 require_relative 'helper'
 require 'pact/pact_broker/fetch_pacts'
 
-describe Pact::PactBroker::FetchPacts, pact: true, skip: "TODO - Rust" do
+describe Pact::PactBroker::FetchPacts, pact: true do
   before do
     allow($stdout).to receive(:puts)
   end
@@ -52,9 +52,6 @@ describe Pact::PactBroker::FetchPacts, pact: true, skip: "TODO - Rust" do
         )
     end
 
-    after(:each) do
-      pact_broker.cleanup
-    end
     context 'retrieving latest pacts by provider' do
       let(:tags) { nil }
 
@@ -88,7 +85,7 @@ describe Pact::PactBroker::FetchPacts, pact: true, skip: "TODO - Rust" do
         pact_broker.start_mock
       end
 
-      it 'returns the array of pact urls', skip: "TODO - Rust" do
+      it 'returns the array of pact urls' do
         pacts = Pact::PactBroker::FetchPacts.call(provider, tags, broker_base_url, basic_auth_options)
         expect(pacts).to eq(
           [
@@ -159,7 +156,7 @@ describe Pact::PactBroker::FetchPacts, pact: true, skip: "TODO - Rust" do
         pact_broker.start_mock
       end
 
-      it 'returns the array of pact urls', skip: "TODO - Rust" do
+      it 'returns the array of pact urls' do
         pacts = Pact::PactBroker::FetchPacts.call(provider, tags, broker_base_url, basic_auth_options)
 
         expect(pacts).to eq(
@@ -329,7 +326,7 @@ describe Pact::PactBroker::FetchPacts, pact: true, skip: "TODO - Rust" do
         pact_broker.start_mock
       end
 
-      it 'returns the array of pact urls', skip: "TODO - Rust" do
+      it 'returns the array of pact urls' do
         pacts = Pact::PactBroker::FetchPacts.call(provider, tags, broker_base_url, basic_auth_options)
 
         expect(pacts).to eq(
@@ -343,7 +340,7 @@ describe Pact::PactBroker::FetchPacts, pact: true, skip: "TODO - Rust" do
       end
     end
 
-    context 'retrieving all the latest pact versions for the specified provider', skip: "TODO - Rust" do
+    context 'retrieving all the latest pact versions for the specified provider', skip: "TODO - rust - Not clearing data" do
       let(:tags) { nil }
 
       before do
