@@ -70,7 +70,7 @@ module Pact
       def interaction_builder
         @interaction_builder ||=
         begin
-          interaction_builder = InteractionBuilder.new do | interaction |
+          interaction_builder = Pact::Consumer::InteractionBuilder.new do | interaction |
             handle_interaction_fully_defined(interaction)
           end
           interaction_builder

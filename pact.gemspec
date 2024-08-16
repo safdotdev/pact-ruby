@@ -31,6 +31,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'thor', '>= 0.20', '< 2.0'
   gem.add_runtime_dependency 'webrick', '~> 1.8'
   gem.add_runtime_dependency "rainbow", '~> 3.1'
+  gem.add_runtime_dependency 'pact-ffi', '~> 0.4'
 
   gem.add_runtime_dependency 'pact-support', '~> 1.16', '>= 1.16.9'
   gem.add_runtime_dependency 'pact-mock_service', '~> 3.0', '>= 3.3.1'

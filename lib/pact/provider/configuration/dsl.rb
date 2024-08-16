@@ -1,4 +1,5 @@
 require 'pact/provider/configuration/service_provider_dsl'
+require 'pact/provider/configuration/service_provider_dsl_ffi'
 require 'pact/provider/configuration/message_provider_dsl'
 
 module Pact
@@ -8,6 +9,10 @@ module Pact
     module DSL
       def service_provider name, &block
         Configuration::ServiceProviderDSL.build(name, &block)
+      end
+
+      def service_provider_ffi name, &block
+        Configuration::Ffi::ServiceProviderDSL.build(name, &block)
       end
 
       def message_provider name, &block

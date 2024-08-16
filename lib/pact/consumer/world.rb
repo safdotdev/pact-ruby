@@ -23,6 +23,13 @@ module Pact
       def add_consumer_contract_builder consumer_contract_builder
         consumer_contract_builders << consumer_contract_builder
       end
+      def consumer_contract_builders_ffi
+        @consumer_contract_builders_ffi ||= []
+      end
+
+      def add_consumer_contract_builder_ffi consumer_contract_builder_ffi
+        consumer_contract_builders_ffi << consumer_contract_builder_ffi
+      end
 
       def register_pact_example_ran
         @any_pact_examples_ran = true

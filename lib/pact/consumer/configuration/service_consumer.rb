@@ -25,7 +25,7 @@ module Pact
           end
 
           def has_pact_with service_provider_name, &block
-            ServiceProvider.build(service_provider_name, name, &block)
+            Pact::Consumer::Configuration::ServiceProvider.build(service_provider_name, name, &block)
           end
         end
 
