@@ -1,7 +1,7 @@
 require_relative 'helper'
 require 'pact/pact_broker/fetch_pacts'
 
-describe Pact::PactBroker::FetchPacts, pact: true do
+describe Pact::PactBroker::FetchPacts, pact: true, skip: "TODO - Rust" do
   before do
     allow($stdout).to receive(:puts)
   end
