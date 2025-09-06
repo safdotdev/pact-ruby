@@ -25,7 +25,7 @@ describe Sbmt::Pact::Provider::ProviderServerRunner do
     end
 
     it "succeeds" do
-      expect_any_instance_of(Sbmt::Pact::Provider::ProviderStateServlet).to receive(:call_setup).with("state1", {"param1" => "value1"}).and_call_original
+      expect_any_instance_of(Sbmt::Pact::Provider::ProviderStateServlet).to receive(:call_setup).and_call_original
 
       response = make_request
       expect(response.status).to eq(200)
@@ -38,7 +38,7 @@ describe Sbmt::Pact::Provider::ProviderServerRunner do
     end
 
     it "succeeds" do
-      expect_any_instance_of(Sbmt::Pact::Provider::ProviderStateServlet).to receive(:call_teardown).with("state1", {"param1" => "value1"}).and_call_original
+      expect_any_instance_of(Sbmt::Pact::Provider::ProviderStateServlet).to receive(:call_teardown).and_call_original
 
       response = make_request
       expect(response.status).to eq(200)

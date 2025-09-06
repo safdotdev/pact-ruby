@@ -46,12 +46,14 @@ module Sbmt
         private
 
         def call_setup(state_name, state_data)
+          logger.debug "call_setup #{state_name} with #{state_data}"
           @global_setup_hook&.call
           @before_setup_hook_proc&.call(state_name, state_data) if @provider_setup_states.dig(state_name, :use_hooks)
           @provider_setup_states.dig(state_name, :proc)&.call(state_data)
         end
 
         def call_teardown(state_name, state_data)
+          logger.debug "call_teardown #{state_name} with #{state_data}"
           @provider_teardown_states.dig(state_name, :proc)&.call(state_data)
           @after_teardown_hook_proc&.call(state_name, state_data) if @provider_setup_states.dig(state_name, :use_hooks)
           @global_teardown_hook&.call
