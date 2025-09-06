@@ -56,7 +56,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "webrick", '~> 1.8'
   gem.add_dependency "rack-proxy"
   gem.add_development_dependency "appraisal", ">= 2.4"
-  gem.add_development_dependency "bundler", ">= 2.3"
+  gem.add_development_dependency "bundler", ">= 2.2"
   gem.add_development_dependency "combustion", ">= 1.3"
   gem.add_development_dependency "gruf", ">= 2.18"
   gem.add_development_dependency "rake", ">= 13.0"
