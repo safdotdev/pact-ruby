@@ -1,0 +1,4 @@
+--color
+--format progress
+--require sbmt/spec_helper
+--require sbmt/rails_helper

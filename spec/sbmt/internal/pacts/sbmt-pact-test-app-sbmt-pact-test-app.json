@@ -1,0 +1,613 @@
+{
+  "consumer": {
+    "name": "sbmt-pact-test-app"
+  },
+  "interactions": [
+    {
+      "contents": {
+        "content": {
+          "colors": {
+            "red": {
+              "description": "description",
+              "link": "http://some-site.ru",
+              "relatesTo": [
+                "blue"
+              ],
+              "title": "title"
+            }
+          },
+          "id": 1,
+          "tags": [
+            "tagX",
+            "tagY"
+          ]
+        },
+        "contentType": "application/json",
+        "encoded": false
+      },
+      "description": "async: pet message as json",
+      "matchingRules": {
+        "body": {
+          "$.colors": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "eachKey",
+                "rules": [
+                  {
+                    "match": "regex",
+                    "regex": "(?-mix:(red|green|blue))"
+                  }
+                ],
+                "value": "{}"
+              },
+              {
+                "match": "eachValue",
+                "rules": [
+                  {
+                    "match": "type"
+                  }
+                ],
+                "value": "{}"
+              }
+            ]
+          },
+          "$.colors.*.description": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "(?-mix:.*)"
+              }
+            ]
+          },
+          "$.colors.*.link": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "(?-mix:.*)"
+              }
+            ]
+          },
+          "$.colors.*.relatesTo": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "eachValue",
+                "rules": [
+                  {
+                    "match": "regex",
+                    "regex": "(?-mix:(red|green|blue))"
+                  }
+                ],
+                "value": "[\"blue\"]"
+              }
+            ]
+          },
+          "$.colors.*.title": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "(?-mix:.*)"
+              }
+            ]
+          },
+          "$.id": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "integer"
+              }
+            ]
+          },
+          "$.tags": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "eachValue",
+                "rules": [
+                  {
+                    "match": "regex",
+                    "regex": "(?-mix:\\w+)"
+                  }
+                ],
+                "value": "[\"tagX\",\"tagY\"]"
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "identity-key": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "(?-mix:.*)"
+              }
+            ]
+          },
+          "key": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "(?-mix:.*)"
+              }
+            ]
+          },
+          "topic": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "(?-mix:.+)"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "contentType": "application/json",
+        "identity-key": "some-key",
+        "key": "key",
+        "topic": "some-topic"
+      },
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "pet exists",
+          "params": {
+            "contentType": "application/json",
+            "pet_id": 1
+          }
+        }
+      ],
+      "type": "Asynchronous/Messages"
+    },
+    {
+      "contents": {
+        "content": "CAESCHNvbWUgcGV0GgR0YWdYIioKC2Rlc2NyaXB0aW9uEhNodHRwOi8vc29tZS1zaXRlLnJ1GgRibHVlIAA=",
+        "contentType": "application/protobuf;message=.pet_store.v1.Pet",
+        "contentTypeHint": "BINARY",
+        "encoded": "base64"
+      },
+      "description": "async: pet message as proto",
+      "interactionMarkup": {
+        "markup": "```protobuf\nmessage Pet {\n    int32 id = 1;\n    string name = 2;\n    repeated string tags = 3;\n    message .pet_store.v1.PetColor colors = 4;\n}\n```\n",
+        "markupType": "COMMON_MARK"
+      },
+      "matchingRules": {
+        "body": {
+          "$.colors": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "values"
+              }
+            ]
+          },
+          "$.colors.*": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          },
+          "$.colors.*.color": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "(?-mix:(RED|GREEN|BLUE))"
+              }
+            ]
+          },
+          "$.colors.*.description": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "(?-mix:.*)"
+              }
+            ]
+          },
+          "$.colors.*.link": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "(?-mix:.*)"
+              }
+            ]
+          },
+          "$.colors.*.relates_to": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "eachValue",
+                "rules": [
+                  {
+                    "match": "regex",
+                    "regex": "(?-mix:(red|green|blue))"
+                  }
+                ],
+                "value": "blue"
+              }
+            ]
+          },
+          "$.id": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "integer"
+              }
+            ]
+          },
+          "$.name": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "(?-mix:.*)"
+              }
+            ]
+          },
+          "$.tags": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "eachValue",
+                "rules": [
+                  {
+                    "match": "regex",
+                    "regex": "(?-mix:\\w+)"
+                  }
+                ],
+                "value": "tagX"
+              }
+            ]
+          }
+        },
+        "metadata": {
+          "identity-key": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "(?-mix:.*)"
+              }
+            ]
+          },
+          "key": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "(?-mix:.*)"
+              }
+            ]
+          },
+          "topic": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "(?-mix:.+)"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "contentType": "application/protobuf;message=.pet_store.v1.Pet",
+        "identity-key": "some-key",
+        "key": "key",
+        "topic": "some-topic"
+      },
+      "pending": false,
+      "pluginConfiguration": {
+        "protobuf": {
+          "descriptorKey": "d92efeecdea2965b6a5e40e8323b11ac",
+          "message": ".pet_store.v1.Pet"
+        }
+      },
+      "providerStates": [
+        {
+          "name": "pet exists",
+          "params": {
+            "contentType": "application/protobuf;message=.pet_store.v1.Pet",
+            "pet_id": 1
+          }
+        }
+      ],
+      "type": "Asynchronous/Messages"
+    },
+    {
+      "description": "grpc: ",
+      "interactionMarkup": {
+        "markup": "```protobuf\nmessage PetResponse {\n    message .pet_store.v1.Pet pet = 1;\n}\n```\n",
+        "markupType": "COMMON_MARK"
+      },
+      "pending": false,
+      "pluginConfiguration": {
+        "protobuf": {
+          "descriptorKey": "d92efeecdea2965b6a5e40e8323b11ac",
+          "service": ".pet_store.v1.Pets/PetById"
+        }
+      },
+      "providerStates": [
+        {
+          "name": "pet exists",
+          "params": {
+            "pet_id": 123
+          }
+        }
+      ],
+      "request": {
+        "contents": {
+          "content": "CHs=",
+          "contentType": "application/protobuf;message=.pet_store.v1.PetByIdRequest",
+          "contentTypeHint": "BINARY",
+          "encoded": "base64"
+        },
+        "matchingRules": {
+          "body": {
+            "$.id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            }
+          }
+        },
+        "metadata": {
+          "contentType": "application/protobuf;message=.pet_store.v1.PetByIdRequest"
+        }
+      },
+      "response": [
+        {
+          "contents": {
+            "content": "CgcIChIDYW55",
+            "contentType": "application/protobuf;message=.pet_store.v1.PetResponse",
+            "contentTypeHint": "BINARY",
+            "encoded": "base64"
+          },
+          "matchingRules": {
+            "body": {
+              "$.pet.id": {
+                "combine": "AND",
+                "matchers": [
+                  {
+                    "match": "integer"
+                  }
+                ]
+              },
+              "$.pet.name": {
+                "combine": "AND",
+                "matchers": [
+                  {
+                    "match": "regex",
+                    "regex": "(?-mix:.*)"
+                  }
+                ]
+              }
+            }
+          },
+          "metadata": {
+            "contentType": "application/protobuf;message=.pet_store.v1.PetResponse"
+          }
+        }
+      ],
+      "transport": "grpc",
+      "type": "Synchronous/Messages"
+    },
+    {
+      "description": "http: getting a pet",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "pet exists",
+          "params": {
+            "pet_id": 123
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/pets/123"
+      },
+      "response": {
+        "body": {
+          "content": {
+            "pet": {
+              "bark": true,
+              "breed": "Husky",
+              "id": 123
+            }
+          },
+          "contentType": "application/json",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "matchingRules": {
+          "body": {
+            "$.pet.bark": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "boolean"
+                }
+              ]
+            },
+            "$.pet.breed": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "(?-mix:.*)"
+                }
+              ]
+            },
+            "$.pet.id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      },
+      "transport": "http",
+      "type": "Synchronous/HTTP"
+    },
+    {
+      "description": "http: updating a pet",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "pet exists",
+          "params": {
+            "pet_id": 123
+          }
+        }
+      ],
+      "request": {
+        "body": {
+          "content": {
+            "breed": "Shepherd"
+          },
+          "contentType": "application/json",
+          "encoded": false
+        },
+        "headers": {
+          "Authorization": [
+            "some-token"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "matchingRules": {
+          "body": {},
+          "header": {
+            "Authorization": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "(?-mix:.*)"
+                }
+              ]
+            }
+          }
+        },
+        "method": "PATCH",
+        "path": "/pets/123"
+      },
+      "response": {
+        "body": {
+          "content": {
+            "pet": {
+              "bark": true,
+              "breed": "Shepherd",
+              "id": 123
+            }
+          },
+          "contentType": "application/json",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "TRACE_ID": [
+            "xxx-xxx"
+          ]
+        },
+        "matchingRules": {
+          "body": {
+            "$.pet.bark": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "boolean"
+                }
+              ]
+            },
+            "$.pet.breed": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "(?-mix:.*)"
+                }
+              ]
+            },
+            "$.pet.id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            }
+          },
+          "header": {
+            "TRACE_ID": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "(?-mix:.*)"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      },
+      "transport": "http",
+      "type": "Synchronous/HTTP"
+    }
+  ],
+  "metadata": {
+    "pactRust": {
+      "ffi": "0.4.22",
+      "mockserver": "1.2.9",
+      "models": "1.2.3"
+    },
+    "pactSpecification": {
+      "version": "4.0"
+    },
+    "plugins": [
+      {
+        "configuration": {
+          "d92efeecdea2965b6a5e40e8323b11ac": {
+            "protoDescriptors": "CqEFCg9wZXRfc3RvcmUucHJvdG8SDHBldF9zdG9yZS52MSJtCgNQZXQSDgoCaWQYASABKAVSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSEgoEdGFncxgDIAMoCVIEdGFncxIuCgZjb2xvcnMYBCADKAsyFi5wZXRfc3RvcmUudjEuUGV0Q29sb3JSBmNvbG9ycyLCAQoIUGV0Q29sb3ISIAoLZGVzY3JpcHRpb24YASABKAlSC2Rlc2NyaXB0aW9uEhIKBGxpbmsYAiABKAlSBGxpbmsSHQoKcmVsYXRlc190bxgDIAMoCVIJcmVsYXRlc1RvEjYKBWNvbG9yGAQgASgOMiAucGV0X3N0b3JlLnYxLlBldENvbG9yLkJhc2VDb2xvclIFY29sb3IiKQoJQmFzZUNvbG9yEgcKA1JFRBAAEgkKBUdSRUVOEAESCAoEQkxVRRACIiAKDlBldEJ5SWRSZXF1ZXN0Eg4KAmlkGAEgASgFUgJpZCK0AQoLUGV0UmVzcG9uc2USIwoDcGV0GAEgASgLMhEucGV0X3N0b3JlLnYxLlBldFIDcGV0EkMKCG1ldGFkYXRhGAIgAygLMicucGV0X3N0b3JlLnYxLlBldFJlc3BvbnNlLk1ldGFkYXRhRW50cnlSCG1ldGFkYXRhGjsKDU1ldGFkYXRhRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ATJKCgRQZXRzEkIKB1BldEJ5SWQSHC5wZXRfc3RvcmUudjEuUGV0QnlJZFJlcXVlc3QaGS5wZXRfc3RvcmUudjEuUGV0UmVzcG9uc2VCH+oCHFBldFN0b3JlOjpHcnBjOjpQZXRTdG9yZTo6VjFiBnByb3RvMw==",
+            "protoFile": "syntax = \"proto3\";\npackage pet_store.v1;\noption ruby_package = \"PetStore::Grpc::PetStore::V1\";\n\nservice Pets {\n  rpc PetById (PetByIdRequest) returns (PetResponse);\n}\n\nmessage Pet {\n  int32 id = 1;\n  string name = 2;\n  repeated string tags = 3;\n  repeated PetColor colors = 4;\n}\n\nmessage PetColor {\n  enum BaseColor {\n    RED = 0;\n    GREEN = 1;\n    BLUE = 2;\n  }\n\n  string description = 1;\n  string link = 2;\n  repeated string relates_to = 3;\n  BaseColor color = 4;\n}\n\nmessage PetByIdRequest {\n  int32 id = 1;\n}\n\nmessage PetResponse {\n  Pet pet = 1;\n  map<string, string> metadata = 2;\n}\n"
+          }
+        },
+        "name": "protobuf",
+        "version": "0.5.1"
+      }
+    ],
+    "sbmt-pact": {
+      "pact-ffi": "0.4.22"
+    }
+  },
+  "provider": {
+    "name": "sbmt-pact-test-app"
+  }
+}
