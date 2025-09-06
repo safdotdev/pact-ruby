@@ -44,26 +44,6 @@ module SbmtPactConsumerDsl
     instance_variable_get(:@_pact_config)
   end
 
-  def execute_http_pact
-    raise InteractionBuilderError.new("interaction is designed to be used one-time only") if defined?(@used)
-    mock_server = Sbmt::Pact::Consumer::MockServer.create_for_http!(
-      pact: pact_config.pact_handle, host: pact_config.mock_host, port: pact_config.mock_port
-    )
-
-    yield(mock_server)
-
-    if mock_server.matched?
-      mock_server.write_pacts!(pact_config.pact_dir)
-    else
-      msg = mismatches_error_msg(mock_server)
-      raise Sbmt::Pact::Consumer::HttpInteractionBuilder::InteractionMismatchesError.new(msg)
-    end
-  ensure
-    @used = true
-    mock_server&.cleanup
-    reset_pact
-  end
-
   def mismatches_error_msg(mock_server)
     rspec_example_desc = RSpec.current_example&.description
     mismatches = JSON.pretty_generate(JSON.parse(mock_server.mismatches))

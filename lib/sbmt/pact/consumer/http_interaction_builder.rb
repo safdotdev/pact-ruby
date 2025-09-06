@@ -59,7 +59,7 @@ module Sbmt
           self
         end
 
-        def with_request(method: nil, path: nil, query: {}, headers: {}, body: nil)
+        def with_request(method, path, query: {}, headers: {}, body: nil)
           interaction_part = PactFfi::FfiInteractionPart["INTERACTION_PART_REQUEST"]
           PactFfi.with_request(pact_interaction, method.to_s, format_value(path))
 
@@ -90,7 +90,7 @@ module Sbmt
           self
         end
 
-        def will_respond_with(status: nil, headers: {}, body: nil)
+        def will_respond_with(status, headers: {}, body: nil)
           interaction_part = PactFfi::FfiInteractionPart["INTERACTION_PART_RESPONSE"]
           PactFfi.response_status(pact_interaction, status)
 
