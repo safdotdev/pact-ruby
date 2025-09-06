@@ -1,0 +1,3 @@
+- rust
+    - normalise file names with spaces in (downcase and replace space with -) to preserve existing ruby mechanism
+    - `Zoo App-Animal Service.json` should become `zoo_app-animal_service.json`

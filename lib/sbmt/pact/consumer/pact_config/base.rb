@@ -10,7 +10,7 @@ module Sbmt
           def initialize(consumer_name:, provider_name:, opts: {})
             @consumer_name = consumer_name
             @provider_name = provider_name
-            @pact_dir = opts[:pact_dir] || (defined?(Rails) ? Rails.root.join("pacts").to_s : "pacts")
+            @pact_dir = opts[:pact_dir] || (defined?(Rails) ? Rails.root.join("../pacts").to_s : "pacts")
             @log_level = opts[:log_level] || :info
           end
 
