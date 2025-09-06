@@ -7,5 +7,5 @@ appraise "rack-2" do
 end
 
 appraise "activesupport" do
-  gem "activesupport", "~> 5.1"
+  gem "activesupport", "~> 7.1"
 end

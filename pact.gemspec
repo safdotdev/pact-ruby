@@ -52,7 +52,7 @@ Gem::Specification.new do |gem|
   # sbmt-pact specific dependencies
   gem.add_dependency "zeitwerk", "~> 2.3"
   gem.add_dependency "pact-ffi", "~> 0.4.28"
-  gem.add_dependency "rack", "~> 3.0"
+  gem.add_dependency "rack"
   gem.add_dependency "webrick", '~> 1.8'
   gem.add_dependency "rack-proxy"
   gem.add_development_dependency "appraisal", ">= 2.4"
@@ -76,6 +76,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "gruf-rspec", ">= 0.6.0"
   # updated for arm64 darwin support
   # gem.add_development_dependency "rdkafka", ">= 0.23.0"
-  gem.add_development_dependency "karafka-rdkafka", ">= 0.20.0"
+  # gem.add_development_dependency "karafka-rdkafka", ">= 0.20.0"
   # gem.add_development_dependency "waterdrop", "~> 2.7", "< 2.8"
 end
