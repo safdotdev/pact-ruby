@@ -1,4 +1,4 @@
-RSpec::Core::RakeTask.new(:spec_sbmt) do |t|
+RSpec::Core::RakeTask.new('spec:sbmt') do |t|
   t.pattern = 'spec/sbmt/**/*_spec.rb'
   t.rspec_opts = '--require sbmt/spec_helper --require sbmt/rails_helper'
 end
