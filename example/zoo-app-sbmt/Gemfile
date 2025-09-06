@@ -5,6 +5,7 @@ group :development, :test do
   gem 'pact', path: '../../'
   gem 'pact_broker-client'
   gem 'pry'
+  # required for sbmt-pact
   gem 'combustion'
 end
 

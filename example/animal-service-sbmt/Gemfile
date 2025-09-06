@@ -4,6 +4,9 @@ group :development, :test do
   gem 'rspec'
   gem 'pact', path: '../../'
   gem 'pry'
+  # required for sbmt-pact
+  gem 'combustion'
+  gem 'webmock'
 end
 
 gem 'rake'
