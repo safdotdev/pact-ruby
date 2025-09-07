@@ -12,7 +12,7 @@ PactBroker::Client::PublicationTask.new do | task |
 end
 
 RSpec::Core::RakeTask.new('spec:sbmt') do |task|
-  task.pattern = 'spec/sbmt/pact/providers/**/*_spec.rb'
+  task.pattern = 'spec/pact/providers/**/*_spec.rb'
   task.rspec_opts = ['-t pact', '--require rails_helper']
 end
 

@@ -3,7 +3,7 @@
 require "rspec/core/rake_task"
 
 RSpec::Core::RakeTask.new(:pact).tap do |task|
-  task.pattern = "spec/sbmt/pact/consumers/**/*_spec.rb"
+  task.pattern = "spec/pact/consumers/**/*_spec.rb"
   task.rspec_opts = "--require sbmt/rails_helper --tag pact"
 end
 

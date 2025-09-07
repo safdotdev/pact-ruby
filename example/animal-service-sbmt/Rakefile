@@ -7,6 +7,6 @@ task :default => 'pact:verify'
 require 'rspec/core/rake_task'
 
 RSpec::Core::RakeTask.new('pact:sbmt:verify') do |task|
-  task.pattern = 'spec/sbmt/pact/consumers/*_spec.rb'
+  task.pattern = 'spec/pact/consumers/*_spec.rb'
   task.rspec_opts = ['-t pact', '--require rails_helper']
 end
