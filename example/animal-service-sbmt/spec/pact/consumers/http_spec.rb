@@ -8,7 +8,7 @@ require 'animal_service/animal_repository'
 require 'rspec/mocks'
 include RSpec::Mocks::ExampleMethods
 
-RSpec.describe 'Verify consumers for Bar Provider', :pact do
+RSpec.describe 'Verify consumers for Bar Provider', :pact_v2 do
   http_pact_provider 'Animal Service', opts: { 
     pact_dir: File.expand_path('../../../../zoo-app-sbmt/spec/pacts', __dir__),
     http_port: 9292,

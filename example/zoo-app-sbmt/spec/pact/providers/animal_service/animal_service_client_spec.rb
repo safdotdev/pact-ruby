@@ -1,7 +1,7 @@
 require 'sbmt/pact/rspec'
 require 'zoo_app/animal_service_client'
 
-RSpec.describe 'ZooApp::AnimalServiceClient', :pact do
+RSpec.describe 'ZooApp::AnimalServiceClient', :pact_v2 do
   has_http_pact_between 'Zoo App', 'Animal Service', opts: { pact_specification: 'V2' }
 
   subject { ZooApp::AnimalServiceClient }

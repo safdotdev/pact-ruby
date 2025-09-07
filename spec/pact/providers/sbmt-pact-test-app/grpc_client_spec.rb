@@ -2,7 +2,7 @@
 
 require "sbmt/pact/rspec"
 
-RSpec.describe "Sbmt::Pact::Providers::Test::GrpcClient", :pact do
+RSpec.describe "Sbmt::Pact::Providers::Test::GrpcClient", :pact_v2 do
   has_grpc_pact_between "sbmt-pact-test-app", "sbmt-pact-test-app"
 
   let(:pet_id) { 123 }

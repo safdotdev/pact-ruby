@@ -13,5 +13,5 @@ RSpec.configure do |config|
   config.define_derived_metadata(file_path: %r{spec/pact/consumers/}) { |metadata| metadata[:pact_entity] = :provider }
 
   # exclude pact specs from generic rspec pipeline
-  config.filter_run_excluding :pact
+  config.filter_run_excluding :pact_v2
 end

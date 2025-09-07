@@ -2,7 +2,7 @@
 
 require "sbmt/pact/rspec"
 
-RSpec.describe "Sbmt::Pact::Providers::Test::Kafka", :pact do
+RSpec.describe "Sbmt::Pact::Providers::Test::Kafka", :pact_v2 do
   has_message_pact_between "sbmt-pact-test-app", "sbmt-pact-test-app"
 
   let(:karafka_message) { Struct.new(:payload, keyword_init: true) }

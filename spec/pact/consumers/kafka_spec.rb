@@ -2,7 +2,7 @@
 
 require "sbmt/pact/rspec"
 
-RSpec.describe "Sbmt::Pact::Consumers::Kafka", :pact do
+RSpec.describe "Sbmt::Pact::Consumers::Kafka", pact_v2: true do
   message_pact_provider "sbmt-pact-test-app"
 
   handle_message "pet message as json" do |provider_state|

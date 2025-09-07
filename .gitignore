@@ -8,7 +8,7 @@ _yardoc
 coverage
 lib/bundler/man
 pkg
-!spec/sbmt/internal/pkg
+!spec/internal/pkg
 rdoc
 spec/reports
 test/tmp

@@ -2,7 +2,7 @@
 
 require "sbmt/pact/rspec"
 
-RSpec.describe "Sbmt::Pact::Providers::Test::HttpClient", :pact do
+RSpec.describe "Sbmt::Pact::Providers::Test::HttpClient", :pact_v2 do
   has_http_pact_between "sbmt-pact-test-app", "sbmt-pact-test-app"
 
   let(:pet_id) { 123 }
