@@ -13,6 +13,6 @@ gem 'rake'
 gem 'rack'
 gem 'sqlite3'
 gem 'sequel'
-gem 'sinatra', '>= 4.1.0'
+gem 'sinatra'
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
