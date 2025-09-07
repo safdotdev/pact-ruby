@@ -55,7 +55,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "webrick", '~> 1.8'
 
   gem.add_dependency "zeitwerk", "~> 2.3"
-  gem.add_dependency "rack"
+  gem.add_dependency "rack", ">= 2.0", "< 3.0"
   gem.add_dependency "pact-ffi", "~> 0.4.28"
   gem.add_dependency "rack-proxy"
 

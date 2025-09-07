@@ -59,6 +59,8 @@ jobs:
           bundler-cache: true
       - run: "bundle exec appraisal install"
       - run: "bundle exec appraisal rack-2 rake"
+      - run: "bundle exec appraisal rack-2 rake spec:sbmt"
+        name: "test with rack 2 - pact-ruby v2"
   test-with-active-support:
     runs-on: ${{ matrix.os }}
     strategy:
