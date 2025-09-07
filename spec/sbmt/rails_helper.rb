@@ -5,7 +5,7 @@ ENV["RAILS_ENV"] = "test"
 # Engine root is used by rails_configuration to correctly
 # load fixtures and support files
 require "pathname"
-ENGINE_ROOT = Pathname.new(File.expand_path('../..', __dir__))
+ENGINE_ROOT = Pathname.new(File.expand_path(__dir__))
 
 puts "Loading Rails environment for tests from #{ENGINE_ROOT}"
 require "webmock"
@@ -13,7 +13,7 @@ require "vcr"
 require "faraday"
 require "gruf"
 require "gruf/rspec"
-require "yabeda" # we have to require it becase of this https://github.com/yabeda-rb/yabeda/pull/38
+# require "yabeda" # we have to require it becase of this https://github.com/yabeda-rb/yabeda/pull/38
 
 require "combustion"
 

@@ -63,6 +63,7 @@ Gem::Specification.new do |gem|
   unless RUBY_PLATFORM =~ /win32|x64-mingw32|x64-mingw-ucrt/
     gem.add_development_dependency "sbmt-kafka_consumer", ">= 2.0.1"
     gem.add_development_dependency "sbmt-kafka_producer", ">= 1.0"
+    # gem.add_development_dependency "karafka-rdkafka", ">= 0.20.0"
   end
   gem.add_development_dependency "rspec"
   gem.add_development_dependency "rspec-rails"
@@ -78,6 +79,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "gruf-rspec", ">= 0.6.0"
   # updated for arm64 darwin support
   # gem.add_development_dependency "rdkafka", ">= 0.23.0"
-  # gem.add_development_dependency "karafka-rdkafka", ">= 0.20.0"
   # gem.add_development_dependency "waterdrop", "~> 2.7", "< 2.8"
 end
