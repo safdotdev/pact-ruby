@@ -14,41 +14,16 @@ describe Sbmt::Pact::Provider::PactBrokerProxyRunner do
 
   context "with pact data request" do
     let(:request_url) { "#{proxy_host}/pacts/provider/paas-stand-seeker/consumer/paas-stand-placer/pact-version/2967a9343bd8fdd28a286c4b8322380020618892/metadata/c1tdW2VdPXByb2R1Y3Rpb24mc1tdW2N2XT03MzIy" }
-    let(:server) { described_class.new(pact_broker_host: broker_host, filter_type: filter_type) }
+    let(:server) { described_class.new(pact_broker_host: broker_host) }
 
     around do |example|
       VCR.use_cassette("pact-broker/pact_data") { example.run }
     end
 
-    context "when filter_type matches" do
-      let(:filter_type) { described_class::FILTER_TYPE_GRPC }
-
-      it "replaces interaction descriptions" do
-        response = make_request
-        descriptions = response.body["interactions"].pluck("description")
-
-        expect(response.status).to eq(200)
-        expect(response.headers["content-length"]).to eq("8670")
-        expect(descriptions).to eq(["grpc: ", "grpc: "])
-      end
-    end
-
-    context "when filter_type does not match" do
-      let(:filter_type) { described_class::FILTER_TYPE_HTTP }
-
-      it "proxies original response" do
-        response = make_request
-        descriptions = response.body["interactions"].pluck("description")
-
-        expect(response.status).to eq(200)
-        expect(response.headers["content-length"]).to eq("8658")
-        expect(descriptions).to eq(["", ""])
-      end
-    end
   end
 
   context "with other broker request" do
-    let(:server) { described_class.new(pact_broker_host: broker_host, filter_type: described_class::FILTER_TYPE_GRPC) }
+    let(:server) { described_class.new(pact_broker_host: broker_host) }
     let(:request_url) { "#{proxy_host}/pacts/provider/paas-stand-seeker/for-verification" }
 
     it "proxies without modification" do

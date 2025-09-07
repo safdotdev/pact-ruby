@@ -11,10 +11,6 @@ module Sbmt
             provider_setup_server.add_message_handler(name, &block)
           end
 
-          def filter_type
-            PACT_BROKER_FILTER_TYPE_ASYNC
-          end
-
           def new_verifier
             AsyncMessageVerifier.new(self)
           end

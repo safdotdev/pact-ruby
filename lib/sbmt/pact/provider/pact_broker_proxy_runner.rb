@@ -8,17 +8,11 @@ module Sbmt
       class PactBrokerProxyRunner
         attr_reader :logger
 
-        FILTER_TYPE_NONE = nil
-        FILTER_TYPE_GRPC = :grpc
-        FILTER_TYPE_ASYNC = :async
-        FILTER_TYPE_SYNC = :sync
-        FILTER_TYPE_HTTP = :http
 
-        def initialize(pact_broker_host:, filter_type: nil, port: 9002, host: "127.0.0.1", pact_broker_user: nil, pact_broker_password: nil, pact_broker_token: nil, logger: nil)
+        def initialize(pact_broker_host:, port: 9002, host: "127.0.0.1", pact_broker_user: nil, pact_broker_password: nil, pact_broker_token: nil, logger: nil)
           @host = host
           @port = port
           @pact_broker_host = pact_broker_host
-          @filter_type = filter_type
           @pact_broker_user = pact_broker_user
           @pact_broker_password = pact_broker_password
           @pact_broker_token = pact_broker_token
@@ -39,7 +33,6 @@ module Sbmt
             nil,
             backend: @pact_broker_host,
             streaming: false,
-            filter_type: @filter_type,
             username: @pact_broker_user || nil,
             password: @pact_broker_password || nil,
             token: @pact_broker_token || nil,

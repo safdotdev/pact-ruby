@@ -10,11 +10,6 @@ module Sbmt
             :pact_uri, :provider_version_branch, :provider_version_tags, :consumer_version_selectors, :enable_pending, :include_wip_pacts_since,
             :fail_if_no_pacts_found, :provider_build_uri, :broker_token, :consumer_version_tags, :publish_verification_results
 
-          PACT_BROKER_FILTER_TYPE_NONE = PactBrokerProxyRunner::FILTER_TYPE_NONE
-          PACT_BROKER_FILTER_TYPE_GRPC = PactBrokerProxyRunner::FILTER_TYPE_GRPC
-          PACT_BROKER_FILTER_TYPE_ASYNC = PactBrokerProxyRunner::FILTER_TYPE_ASYNC
-          PACT_BROKER_FILTER_TYPE_SYNC = PactBrokerProxyRunner::FILTER_TYPE_SYNC
-          PACT_BROKER_FILTER_TYPE_HTTP = PactBrokerProxyRunner::FILTER_TYPE_HTTP
 
           def initialize(provider_name:, opts: {})
             @provider_name = provider_name
@@ -47,7 +42,6 @@ module Sbmt
               @pact_proxy_server = PactBrokerProxyRunner.new(
                 port: @pact_proxy_port,
                 pact_broker_host: @broker_url,
-                filter_type: filter_type,
                 pact_broker_user: @broker_username,
                 pact_broker_password: @broker_password,
                 pact_broker_token: @broker_token
@@ -55,9 +49,6 @@ module Sbmt
             end
           end
 
-          def filter_type
-            PACT_BROKER_FILTER_TYPE_NONE
-          end
 
           def start_servers
             @provider_setup_server.start

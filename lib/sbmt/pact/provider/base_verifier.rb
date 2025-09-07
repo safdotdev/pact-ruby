@@ -131,19 +131,6 @@ module Sbmt
             bool_to_int(ENV["PACT_PROVIDER_NO_STATE"] || false)
           )
 
-          # filters based on INTERACTION_FILTER_REGEX. e.g. "^grpc:.+", opinionated and v4 specific, so removed for now.
-          ## set_filter_info(handle)
-          # descriptions are set and read from parsed v4 spec pacts in a pact broker proxy
-
-          #  excerpt from lib/sbmt/pact/provider/pact_broker_proxy.rb
-          # pact_json_hash["interactions"].each do |interaction|
-          #   set_description_prefix(interaction, "grpc:") if interaction["transport"] == "grpc" && filter_type == :grpc
-          #   set_description_prefix(interaction, "http:") if interaction["transport"] == "http" && filter_type == :http
-          #   set_description_prefix(interaction, "http:") if interaction["type"] == "Synchronous/HTTP" && filter_type == :http
-          #   set_description_prefix(interaction, "async:") if interaction["type"] == "Asynchronous/Messages" && filter_type == :async
-          #   set_description_prefix(interaction, "sync:") if interaction["type"] == "Synchronous/Messages" && filter_type == :sync
-          # end
-
           Sbmt::Pact::Native::Logger.log_to_stdout(@pact_config.log_level)
 
           logger.info("[verifier] verification initialized for provider #{@pact_config.provider_name}, version #{@pact_config.provider_version}, transport #{self.class::PROVIDER_TRANSPORT_TYPE}")
@@ -167,10 +154,6 @@ module Sbmt
           raise Sbmt::Pact::ImplementationRequired, "Implement #add_provider_transport in a subclass"
         end
 
-        def set_filter_info(pact_handle)
-          # e.g. PactFfi::Verifier.set_filter_info(pact_handle, "^grpc:.+", nil, 0)
-          raise Sbmt::Pact::ImplementationRequired, "Implement #set_filter_info in a subclass"
-        end
 
         def start_servers!
           logger.info("[verifier] starting services")

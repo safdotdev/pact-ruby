@@ -8,7 +8,6 @@ module Sbmt
     module Provider
       class GrpcVerifier < BaseVerifier
         PROVIDER_TRANSPORT_TYPE = "grpc"
-        INTERACTION_FILTER_REGEX = "^grpc:.+"
 
         def initialize(pact_config)
           super
@@ -23,9 +22,6 @@ module Sbmt
           PactFfi::Verifier.add_provider_transport(pact_handle, PROVIDER_TRANSPORT_TYPE, @pact_config.grpc_port, "", "")
         end
 
-        def set_filter_info(pact_handle)
-          PactFfi::Verifier.set_filter_info(pact_handle, INTERACTION_FILTER_REGEX, nil, 0)
-        end
 
         def start_servers!
           super
