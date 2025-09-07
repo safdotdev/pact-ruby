@@ -31,7 +31,7 @@ reports
 Gemfile.lock
 example/**/Gemfile.lock
 *.gemfile.lock
-gemfiles/*.gemfile.lock
+gemfiles
 reports/pacts
 spec/examples.txt
 *bethtest*
