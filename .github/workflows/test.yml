@@ -76,8 +76,20 @@ jobs:
           ruby-version: ${{ matrix.ruby_version }}
           bundler-cache: true
       - run: "bundle exec appraisal install"
+        name: "install active support - pact-ruby"
+        env:
+          PACT_RUBY_V2_DISABLE: 'true'
+      - run: "bundle exec appraisal activesupport rake spec_with_active_support"
+        name: "test with active support - pact-ruby"
+        env:
+          PACT_RUBY_V2_DISABLE: 'true'
+      - run: rm -rf Gemfile.lock gemfiles
+        shell: bash
+      - run: "bundle install"
+        name: "bundle install - pact-ruby v2"
         env:
           LOAD_ACTIVE_SUPPORT: 'true'
-      - run: "bundle exec appraisal activesupport rake spec_with_active_support"
+      - run: "bundle exec rake spec:sbmt"
+        name: "test with active support - pact-ruby v2"
         env:
           LOAD_ACTIVE_SUPPORT: 'true'

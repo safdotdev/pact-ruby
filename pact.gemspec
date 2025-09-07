@@ -74,7 +74,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "vcr", ">= 6.0"
 
 
-  unless ENV['LOAD_ACTIVE_SUPPORT'] == 'true'
+  if ENV['PACT_RUBY_V2_DISABLE'] != 'true'
     gem.add_development_dependency "combustion", ">= 1.3"
     unless RUBY_PLATFORM =~ /win32|x64-mingw32|x64-mingw-ucrt/
       gem.add_development_dependency "sbmt-kafka_consumer", ">= 2.0.1"
