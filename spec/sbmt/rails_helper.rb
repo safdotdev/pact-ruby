@@ -5,7 +5,7 @@ ENV["RAILS_ENV"] = "test"
 # Engine root is used by rails_configuration to correctly
 # load fixtures and support files
 require "pathname"
-ENGINE_ROOT = Pathname.new(File.expand_path(__dir__))
+ENGINE_ROOT = Pathname.new(File.expand_path('../..', __dir__))
 
 puts "Loading Rails environment for tests from #{ENGINE_ROOT}"
 require "webmock"
@@ -36,5 +36,18 @@ require "rspec/rails"
 Dir["#{__dir__}/support/**/*.rb"].sort.each { |f| require f }
 
 # Optional dependencies
-require "sbmt/kafka_consumer"
-require "sbmt/kafka_producer"
+unless RUBY_PLATFORM =~ /win32|x64-mingw32|x64-mingw-ucrt/
+  require "sbmt/kafka_consumer"
+  require "sbmt/kafka_producer"
+end
+
+# Monkey patch Gruf::Server to remove QUIT from KILL_SIGNALS for windows compatibility
+if Gem.win_platform?
+  warn "[⚠️] Windows platform detected, monkey patching Gruf::Server to remove QUIT from KILL_SIGNALS"
+  module Gruf
+    class Server
+      remove_const(:KILL_SIGNALS) if const_defined?(:KILL_SIGNALS)
+      KILL_SIGNALS = %w[INT TERM].freeze
+    end
+  end
+end

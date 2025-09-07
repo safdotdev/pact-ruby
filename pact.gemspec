@@ -60,8 +60,10 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "combustion", ">= 1.3"
   gem.add_development_dependency "gruf", ">= 2.18"
   gem.add_development_dependency "rake", ">= 13.0"
-  gem.add_development_dependency "sbmt-kafka_consumer", ">= 2.0.1"
-  gem.add_development_dependency "sbmt-kafka_producer", '~>2.0', '<3.0'
+  unless RUBY_PLATFORM =~ /win32|x64-mingw32|x64-mingw-ucrt/
+    gem.add_development_dependency "sbmt-kafka_consumer", ">= 2.0.1"
+    gem.add_development_dependency "sbmt-kafka_producer", ">= 1.0"
+  end
   gem.add_development_dependency "rspec"
   gem.add_development_dependency "rspec-rails"
   gem.add_development_dependency "rspec_junit_formatter"
