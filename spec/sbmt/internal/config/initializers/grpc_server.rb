@@ -7,5 +7,12 @@
   c.logger = Rails.logger
 end
 
-Rails.root.glob("pkg/server/**/*_services_pb.rb").sort.each { require _1 }
-Rails.root.glob("app/rpc/**/*.rb").sort.each { require _1 }
+puts "Loading gRPC service files from #{Rails.root}"
+required_files = []
+required_files += Rails.root.glob("pkg/server/**/*_services_pb.rb").sort
+required_files += Rails.root.glob("app/rpc/**/*.rb").sort
+puts "Requiring files:"
+required_files.each do |file|
+  require file
+  puts "Required: #{file}"
+end

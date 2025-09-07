@@ -16,6 +16,7 @@ require "gruf/rspec"
 # require "yabeda" # we have to require it becase of this https://github.com/yabeda-rb/yabeda/pull/38
 
 require "combustion"
+puts "Rails root: #{Rails.root}"
 
 begin
   Combustion.path = 'spec/sbmt/internal'
@@ -31,8 +32,9 @@ rescue => e
 end
 
 require "rspec/rails"
+puts "Rails root: #{Rails.root}"
+# Add additional requires below this line. Rails is not loaded until this point!
 
-# # Add additional requires below this line. Rails is not loaded until this point!
 Dir["#{__dir__}/support/**/*.rb"].sort.each { |f| require f }
 
 # Optional dependencies
@@ -41,13 +43,13 @@ unless RUBY_PLATFORM =~ /win32|x64-mingw32|x64-mingw-ucrt/
   require "sbmt/kafka_producer"
 end
 
-# Monkey patch Gruf::Server to remove QUIT from KILL_SIGNALS for windows compatibility
-if Gem.win_platform?
-  warn "[⚠️] Windows platform detected, monkey patching Gruf::Server to remove QUIT from KILL_SIGNALS"
-  module Gruf
-    class Server
-      remove_const(:KILL_SIGNALS) if const_defined?(:KILL_SIGNALS)
-      KILL_SIGNALS = %w[INT TERM].freeze
-    end
-  end
-end
+# # Monkey patch Gruf::Server to remove QUIT from KILL_SIGNALS for windows compatibility
+# if Gem.win_platform?
+#   warn "[⚠️] Windows platform detected, monkey patching Gruf::Server to remove QUIT from KILL_SIGNALS"
+#   module Gruf
+#     class Server
+#       remove_const(:KILL_SIGNALS) if const_defined?(:KILL_SIGNALS)
+#       KILL_SIGNALS = %w[INT TERM].freeze
+#     end
+#   end
+# end
