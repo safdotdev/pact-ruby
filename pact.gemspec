@@ -51,7 +51,7 @@ Gem::Specification.new do |gem|
     unless RUBY_PLATFORM =~ /win32|x64-mingw32|x64-mingw-ucrt/
       gem.add_development_dependency "sbmt-kafka_consumer", ">= 2.0.1"
       gem.add_development_dependency "sbmt-kafka_producer", ">= 1.0"
-      gem.add_development_dependency "karafka-rdkafka", ">= 0.20.0"
+      # gem.add_development_dependency "karafka-rdkafka", ">= 0.20.0"
     end
     gem.add_development_dependency "gruf", ">= 2.18"
     gem.add_development_dependency "rspec-rails"

@@ -72,6 +72,10 @@ jobs:
       - run: "bundle exec appraisal install"
       - run: "bundle exec appraisal rack-2 rake"
         name: "test with rack 2 - pact-ruby v2"
+      - run: "bundle install"
+        name: "bundle install - pact-ruby v2"
+        env:
+          PACT_RUBY_V2_ENABLE: 'true'
       - run: rm -rf Gemfile.lock gemfiles
         shell: bash
       - run: "bundle exec appraisal install"
