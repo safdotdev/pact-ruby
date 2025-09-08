@@ -11,7 +11,7 @@ PactBroker::Client::PublicationTask.new do | task |
   task.pact_broker_base_url = "http://localhost:9292"
 end
 
-RSpec::Core::RakeTask.new('pact:v2') do |task|
+RSpec::Core::RakeTask.new('spec:v2') do |task|
   task.pattern = 'spec/pact/providers/**/*_spec.rb'
   task.rspec_opts = ['-t pact', '--require rails_helper']
 end
