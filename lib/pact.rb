@@ -1,7 +1,8 @@
 
 if ENV['PACT_RUBY_V2_ENABLE'] == 'true'
   require 'pact/v2'
-else
+end
+if ENV['PACT_RUBY_V1_ENABLE'] != 'false'
   require 'pact/support'
   require 'pact/version'
   require 'pact/configuration'

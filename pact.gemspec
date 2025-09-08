@@ -26,6 +26,10 @@ Gem::Specification.new do |gem|
     'documentation_uri' => 'https://github.com/pact-foundation/pact-ruby/blob/master/README.md'
   }
 
+  gem.add_development_dependency 'rake', '~> 13.0'
+  gem.add_development_dependency 'faraday', '~>2.0', '<3.0'
+  gem.add_development_dependency 'webmock', '~> 3.0'
+
   if ENV['PACT_RUBY_V2_ENABLE'] == 'true'
       gem.add_dependency "webrick", '~> 1.8'
       gem.add_dependency "zeitwerk", "~> 2.3"
@@ -33,9 +37,6 @@ Gem::Specification.new do |gem|
       gem.add_dependency "pact-ffi", "~> 0.4.28"
       gem.add_dependency "rack-proxy"
 
-      gem.add_development_dependency "rake", ">= 13.0"
-      gem.add_development_dependency "faraday", '~>2.0', '<3.0'
-      gem.add_development_dependency "webmock", ">= 3.0"
 
       gem.add_development_dependency "appraisal", ">= 2.4"
       gem.add_development_dependency "bundler", ">= 2.2"
@@ -51,14 +52,14 @@ Gem::Specification.new do |gem|
     unless RUBY_PLATFORM =~ /win32|x64-mingw32|x64-mingw-ucrt/
       gem.add_development_dependency "sbmt-kafka_consumer", ">= 2.0.1"
       gem.add_development_dependency "sbmt-kafka_producer", ">= 1.0"
-      # gem.add_development_dependency "karafka-rdkafka", ">= 0.20.0"
     end
     gem.add_development_dependency "gruf", ">= 2.18"
     gem.add_development_dependency "rspec-rails"
     gem.add_development_dependency "rubocop-rails"
     gem.add_development_dependency "gruf-rspec", ">= 0.6.0"
+end
 
-  else
+ if ENV['PACT_RUBY_V1_ENABLE'] != 'false'
     gem.add_runtime_dependency 'rspec', '~> 3.0'
     gem.add_runtime_dependency 'rack-test', '>= 0.6.3', '< 3.0.0'
     gem.add_runtime_dependency 'thor', '>= 0.20', '< 2.0'
@@ -77,10 +78,11 @@ Gem::Specification.new do |gem|
     gem.add_development_dependency 'pact-message', '~> 0.8'
     gem.add_development_dependency 'rspec-its', '~> 1.3'
     gem.add_development_dependency 'ostruct'
-    gem.add_development_dependency 'rake', '~> 13.0'
-    gem.add_development_dependency 'webmock', '~> 3.0'
-    gem.add_development_dependency 'faraday', '~>2.0', '<3.0'
     gem.add_development_dependency 'webrick', '~> 1.8'
+  end
+  
+  if ENV['X_PACT_DEVELOPMENT_RDKAFKA'] == 'true'
+    gem.add_development_dependency "karafka-rdkafka", ">= 0.20.0"
   end
 
 end
