@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Sbmt::Pact::Consumer::GrpcInteractionBuilder do
+RSpec.describe Pact::V2::Consumer::GrpcInteractionBuilder do
   subject { described_class.new(nil) }
 
   let(:proto_path) { Rails.root.join("deps/services/pet_store/grpc/pet_store.proto").to_s }

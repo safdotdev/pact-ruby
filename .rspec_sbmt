@@ -1,4 +1,4 @@
 --color
 --format progress
---require sbmt/spec_helper
---require sbmt/rails_helper
+--require spec_helper_v2
+--require rails_helper_v2

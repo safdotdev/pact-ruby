@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe Sbmt::Pact::Matchers do
-  subject(:test_class) { Class.new { extend Sbmt::Pact::Matchers } }
+RSpec.describe Pact::V2::Matchers do
+  subject(:test_class) { Class.new { extend Pact::V2::Matchers } }
 
   context "with basic format serialization" do
     it "properly builds matcher for UUID" do

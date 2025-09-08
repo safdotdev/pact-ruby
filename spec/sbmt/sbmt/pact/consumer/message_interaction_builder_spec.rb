@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Sbmt::Pact::Consumer::MessageInteractionBuilder do
+RSpec.describe Pact::V2::Consumer::MessageInteractionBuilder do
   subject { described_class.new(nil) }
 
   context "when proto message is used" do

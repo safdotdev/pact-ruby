@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "sbmt/pact/rspec"
+require "pact/v2/rspec"
 
-RSpec.describe "Sbmt::Pact::Consumers::Http", :pact_v2 do
-  http_pact_provider "sbmt-pact-test-app"
+RSpec.describe "Pact::V2::Consumers::Http", :pact_v2 do
+  http_pact_provider "pact-ruby-v2-test-app"
 end

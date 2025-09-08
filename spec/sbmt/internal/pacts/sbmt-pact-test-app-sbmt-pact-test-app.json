@@ -1,6 +1,6 @@
 {
   "consumer": {
-    "name": "sbmt-pact-test-app"
+    "name": "pact-ruby-v2-test-app"
   },
   "interactions": [
     {
@@ -608,6 +608,6 @@
     }
   },
   "provider": {
-    "name": "sbmt-pact-test-app"
+    "name": "pact-ruby-v2-test-app"
   }
 }

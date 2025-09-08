@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe Sbmt::Pact::Consumer::InteractionContents do
-  include Sbmt::Pact::Matchers
+RSpec.describe Pact::V2::Consumer::InteractionContents do
+  include Pact::V2::Matchers
 
   let(:contents) do
     {

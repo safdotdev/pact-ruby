@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Sbmt::Pact::Provider::ProviderServerRunner do
+describe Pact::V2::Provider::ProviderServerRunner do
   let(:http_client) do
     Faraday.new do |conn|
       conn.response :json
@@ -25,7 +25,7 @@ describe Sbmt::Pact::Provider::ProviderServerRunner do
     end
 
     it "succeeds" do
-      expect_any_instance_of(Sbmt::Pact::Provider::ProviderStateServlet).to receive(:call_setup).and_call_original
+      expect_any_instance_of(Pact::V2::Provider::ProviderStateServlet).to receive(:call_setup).and_call_original
 
       response = make_request
       expect(response.status).to eq(200)
@@ -38,7 +38,7 @@ describe Sbmt::Pact::Provider::ProviderServerRunner do
     end
 
     it "succeeds" do
-      expect_any_instance_of(Sbmt::Pact::Provider::ProviderStateServlet).to receive(:call_teardown).and_call_original
+      expect_any_instance_of(Pact::V2::Provider::ProviderStateServlet).to receive(:call_teardown).and_call_original
 
       response = make_request
       expect(response.status).to eq(200)
@@ -51,8 +51,8 @@ describe Sbmt::Pact::Provider::ProviderServerRunner do
     end
 
     it "succeeds" do
-      expect_any_instance_of(Sbmt::Pact::Provider::ProviderStateServlet).not_to receive(:call_setup)
-      expect_any_instance_of(Sbmt::Pact::Provider::ProviderStateServlet).not_to receive(:call_teardown)
+      expect_any_instance_of(Pact::V2::Provider::ProviderStateServlet).not_to receive(:call_setup)
+      expect_any_instance_of(Pact::V2::Provider::ProviderStateServlet).not_to receive(:call_teardown)
 
       response = make_request
       expect(response.status).to eq(200)

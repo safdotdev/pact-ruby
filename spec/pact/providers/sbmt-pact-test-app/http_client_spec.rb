@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "sbmt/pact/rspec"
+require "pact/v2/rspec"
 
-RSpec.describe "Sbmt::Pact::Providers::Test::HttpClient", :pact_v2 do
-  has_http_pact_between "sbmt-pact-test-app", "sbmt-pact-test-app"
+RSpec.describe "Pact::V2::Providers::Test::HttpClient", :pact_v2 do
+  has_http_pact_between "pact-ruby-v2-test-app", "pact-ruby-v2-test-app"
 
   let(:pet_id) { 123 }
   let(:host) { "localhost:3000" }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Sbmt::Pact::Provider::PactBrokerProxyRunner do
+describe Pact::V2::Provider::PactBrokerProxyRunner do
   let(:http_client) do
     Faraday.new do |conn|
       conn.response :json

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Sbmt::Pact::Configuration do
+RSpec.describe Pact::V2::Configuration do
   subject(:config) { described_class.new }
 
   describe "#before_provider_state_setup" do

@@ -45,13 +45,13 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec-its', '~> 1.3'
   gem.add_development_dependency 'ostruct'
 
-  # shared pact-ruby / sbmt-pact dependencies 
+  # shared pact-ruby / pact-ruby-v2 dependencies 
   # gem.add_development_dependency 'rake', '~> 13.0'
   # gem.add_development_dependency 'webmock', '~> 3.0'
   # gem.add_development_dependency 'faraday', '~>2.0', '<3.0'
   # gem.add_development_dependency 'webrick', '~> 1.8'
 
-  # sbmt-pact specific dependencies
+  # pact-ruby-v2 specific dependencies
   gem.add_dependency "webrick", '~> 1.8'
 
   gem.add_dependency "zeitwerk", "~> 2.3"
