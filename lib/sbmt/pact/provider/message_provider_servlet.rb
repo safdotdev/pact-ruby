@@ -71,8 +71,7 @@ module Sbmt
         end
 
         def find_handler_for(description)
-          desc_no_prefix = description.sub(/^(async|sync): /, "")
-          @message_handlers[description] || @message_handlers[desc_no_prefix]
+          @message_handlers[description]
         end
       end
     end

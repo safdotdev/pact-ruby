@@ -17,8 +17,8 @@ module Sbmt
             @app = opts[:app] || nil
           end
 
-          def new_verifier
-            HttpVerifier.new(self)
+          def new_verifier(config = nil)
+            HttpVerifier.new(self, config)
           end
         end
       end

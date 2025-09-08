@@ -16,9 +16,8 @@ module Sbmt
             @grpc_services = opts[:grpc_services] || []
           end
 
-
-          def new_verifier
-            GrpcVerifier.new(self)
+          def new_verifier(config = nil)
+            GrpcVerifier.new(self, config)
           end
         end
       end

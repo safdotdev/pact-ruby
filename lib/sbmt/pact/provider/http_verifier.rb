@@ -9,7 +9,7 @@ module Sbmt
       class HttpVerifier < BaseVerifier
         PROVIDER_TRANSPORT_TYPE = "http"
 
-        def initialize(pact_config)
+        def initialize(pact_config, mixed_config = nil)
           super
 
           raise ArgumentError, "pact_config must be an instance of Sbmt::Pact::Provider::PactConfig::Http" unless pact_config.is_a?(::Sbmt::Pact::Provider::PactConfig::Http)

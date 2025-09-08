@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "pact_config/grpc"
+# require_relative "pact_config/grpc"
 
 module Sbmt
   module Pact
@@ -14,6 +14,8 @@ module Sbmt
             Grpc.new(provider_name: provider_name, opts: opts)
           when :async
             Async.new(provider_name: provider_name, opts: opts)
+          when :mixed
+            Mixed.new(provider_name: provider_name, opts: opts)
           else
             raise ArgumentError, "unknown transport_type: #{transport_type}"
           end

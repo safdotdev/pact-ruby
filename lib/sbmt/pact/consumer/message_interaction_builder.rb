@@ -14,7 +14,7 @@ module Sbmt
         PROTO_CONTENT_TYPE = "application/protobuf"
 
         PROTOBUF_PLUGIN_NAME = "protobuf"
-        PROTOBUF_PLUGIN_VERSION = "0.5.5"
+        PROTOBUF_PLUGIN_VERSION = "0.6.5"
 
         # https://docs.rs/pact_ffi/latest/pact_ffi/mock_server/handles/fn.pactffi_write_message_pact_file.html
         WRITE_PACT_FILE_ERRORS = {

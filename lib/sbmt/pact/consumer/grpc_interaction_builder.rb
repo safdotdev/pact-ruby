@@ -11,7 +11,7 @@ module Sbmt
         CONTENT_TYPE = "application/protobuf"
         GRPC_CONTENT_TYPE = "application/grpc"
         PROTOBUF_PLUGIN_NAME = "protobuf"
-        PROTOBUF_PLUGIN_VERSION = "0.5.5"
+        PROTOBUF_PLUGIN_VERSION = "0.6.5"
 
         class PluginInitError < Sbmt::Pact::FfiError; end
 
@@ -41,7 +41,6 @@ module Sbmt
         def initialize(pact_config, description: nil)
           @pact_config = pact_config
           @description = description || ""
-
           @proto_path = nil
           @proto_include_dirs = []
           @service_name = nil
@@ -124,7 +123,7 @@ module Sbmt
           pact_handle = init_pact
           init_plugin!(pact_handle)
 
-          message_pact = PactFfi::SyncMessageConsumer.new_interaction(pact_handle, description)
+          message_pact = PactFfi::SyncMessageConsumer.new_interaction(pact_handle, @description)
           @provider_state_meta&.each_pair do |provider_state, meta|
             if meta.present?
               meta.each_pair { |k, v| PactFfi.given_with_param(message_pact, provider_state, k.to_s, v.to_s) }

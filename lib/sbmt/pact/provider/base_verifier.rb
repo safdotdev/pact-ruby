@@ -27,9 +27,10 @@ module Sbmt
 
         # env below are set up by pipeline-builder
         # see paas/cicd/images/pact/pipeline-builder/-/blob/master/internal/commands/consumers-pipeline/ruby.go
-        def initialize(pact_config)
+        def initialize(pact_config, mixed_config = nil)
           raise ArgumentError, "pact_config must be a subclass of Sbmt::Pact::Provider::PactConfig::Base" unless pact_config.is_a?(::Sbmt::Pact::Provider::PactConfig::Base)
           @pact_config = pact_config
+          @mixed_config = mixed_config
           @logger = Logger.new($stdout)
         end
 
@@ -57,7 +58,7 @@ module Sbmt
           @used = true
           PactFfi::Verifier.shutdown(pact_handle) if pact_handle
           stop_servers
-
+          @grpc_server.stop if @grpc_server
           raise exception if exception
         end
 
@@ -79,6 +80,20 @@ module Sbmt
         def init_pact
           handle = PactFfi::Verifier.new_for_application("sbmt-pact", PactFfi.version)
           set_provider_info(handle)
+
+          if defined?(@mixed_config.grpc_config) && @mixed_config.grpc_config
+            @grpc_server = GrufServer.new(host: "127.0.0.1:#{@mixed_config.grpc_config.grpc_port}", services: @mixed_config.grpc_config.grpc_services)
+            @grpc_server.start
+            PactFfi::Verifier.add_provider_transport(handle, "grpc", @mixed_config.grpc_config.grpc_port, "", "")
+          end
+
+          if defined?(@mixed_config.async_config) && @mixed_config.async_config
+            setup_uri = URI(@mixed_config.async_config.message_setup_url)
+            PactFfi::Verifier.add_provider_transport(handle, "message", setup_uri.port, setup_uri.path, "")
+          end
+
+          # todo: add http transport?
+
           PactFfi::Verifier.set_provider_state(handle, @pact_config.provider_setup_url, 1, 1)
           PactFfi::Verifier.set_verification_options(handle, 0, 10000)
           # pactffi_verifier_set_publish_options(
@@ -153,7 +168,6 @@ module Sbmt
         def add_provider_transport(pact_handle)
           raise Sbmt::Pact::ImplementationRequired, "Implement #add_provider_transport in a subclass"
         end
-
 
         def start_servers!
           logger.info("[verifier] starting services")
