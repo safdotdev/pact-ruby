@@ -82,4 +82,5 @@ Gem::Specification.new do |gem|
     gem.add_development_dependency 'faraday', '~>2.0', '<3.0'
     gem.add_development_dependency 'webrick', '~> 1.8'
   end
+
 end
