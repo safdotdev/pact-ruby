@@ -5,7 +5,7 @@ ENV["RAILS_ENV"] = "test"
 # Engine root is used by rails_configuration to correctly
 # load fixtures and support files
 require "pathname"
-ENGINE_ROOT = Pathname.new(File.expand_path(__dir__))
+ENGINE_ROOT = Pathname.new(File.expand_path("..", __dir__))
 
 puts "Loading Rails environment for tests from #{ENGINE_ROOT}"
 require "webmock"
@@ -19,7 +19,6 @@ require "combustion"
 puts "Rails root: #{Rails.root}"
 
 begin
-  Combustion.path = 'spec/sbmt/internal'
   Combustion.initialize! :action_controller do
     config.log_level = :fatal if ENV["LOG"].to_s.empty?
     config.i18n.available_locales = %i[en]

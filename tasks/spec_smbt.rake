@@ -1,6 +1,6 @@
-RSpec::Core::RakeTask.new('pact:v2') do |t|
-  t.pattern = 'spec/sbmt/**/*_spec.rb'
-  t.rspec_opts = '--require sbmt/spec_helper --require sbmt/rails_helper'
+RSpec::Core::RakeTask.new('spec:v2') do |t|
+  t.pattern = 'spec/v2/**/*_spec.rb'
+  t.rspec_opts = '--require spec_helper_v2 --require rails_helper_v2'
 end
 # Need to run this in separate process because left over state from
 # testing the actual pact framework messes up the tests that actually

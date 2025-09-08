@@ -4,7 +4,7 @@ RSpec.describe Pact::V2::Consumer::MessageInteractionBuilder do
   subject { described_class.new(nil) }
 
   context "when proto message is used" do
-    let(:proto_path) { "spec/sbmt/internal/deps/services/pet_store/grpc/pet_store.proto" }
+    let(:proto_path) { "spec/internal/deps/services/pet_store/grpc/pet_store.proto" }
     let(:builder) do
       subject
         .upon_receiving("message as proto")
@@ -24,7 +24,7 @@ RSpec.describe Pact::V2::Consumer::MessageInteractionBuilder do
   end
 
   context "when json message is used" do
-    let(:proto_path) { "spec/sbmt/internal/deps/services/pet_store/grpc/pet_store.proto" }
+    let(:proto_path) { "spec/internal/deps/services/pet_store/grpc/pet_store.proto" }
     let(:builder) do
       subject
         .upon_receiving("message as proto")

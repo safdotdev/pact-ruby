@@ -67,7 +67,7 @@ RSpec.describe "Pact::V2::Providers::Test::Kafka", :pact_v2 do
     let(:interaction) do
       super()
         .upon_receiving("pet message as proto")
-        .with_proto_class("spec/sbmt/internal/deps/services/pet_store/grpc/pet_store.proto", "Pet")
+        .with_proto_class("spec/internal/deps/services/pet_store/grpc/pet_store.proto", "Pet")
         .with_proto_contents(
           id: match_any_integer(1),
           name: match_any_string("some pet"),

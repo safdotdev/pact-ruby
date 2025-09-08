@@ -12,7 +12,7 @@ RSpec.describe "Pact::V2::Providers::Test::GrpcClient", :pact_v2 do
 
   let(:interaction) do
     new_interaction
-      .with_service("spec/sbmt/internal/deps/services/pet_store/grpc/pet_store.proto", "Pets/PetById")
+      .with_service("spec/internal/deps/services/pet_store/grpc/pet_store.proto", "Pets/PetById")
   end
 
   context "with Pets/PetById" do
