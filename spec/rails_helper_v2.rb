@@ -34,7 +34,8 @@ require "rspec/rails"
 puts "Rails root: #{Rails.root}"
 # Add additional requires below this line. Rails is not loaded until this point!
 
-Dir["#{__dir__}/support/**/*.rb"].sort.each { |f| require f }
+Dir["#{__dir__}/support/vcr.rb"].sort.each { |f| require f }
+# Dir["#{__dir__}/support/**/*.rb"].sort.each { |f| require f }
 
 # Optional dependencies
 unless RUBY_PLATFORM =~ /win32|x64-mingw32|x64-mingw-ucrt/
