@@ -25,8 +25,8 @@ RSpec.describe "Pact::V2::Providers::Test::HttpClient", :pact_v2 do
         super()
           .given("pet exists", pet_id: pet_id)
           .upon_receiving("getting a pet")
-          .with_request(:get, "/pets/#{pet_id}")
-          .will_respond_with(200, body: {
+          .with_request(method: :get, path: "/pets/#{pet_id}")
+          .will_respond_with(status: 200, body: {
             pet: {
               id: match_any_integer(pet_id),
               bark: match_any_boolean(true),
@@ -55,10 +55,10 @@ RSpec.describe "Pact::V2::Providers::Test::HttpClient", :pact_v2 do
         super()
           .given("pet exists", pet_id: pet_id)
           .upon_receiving("updating a pet")
-          .with_request(:patch, "/pets/#{pet_id}",
+          .with_request(method: :patch, path: "/pets/#{pet_id}",
             headers: {Authorization: match_any_string("some-token")},
             body: pet_data)
-          .will_respond_with(200,
+          .will_respond_with(status: 200,
             headers: {TRACE_ID: match_any_string("xxx-xxx")},
             body: {
               pet: {

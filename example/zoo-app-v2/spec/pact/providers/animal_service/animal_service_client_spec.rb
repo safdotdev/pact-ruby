@@ -20,8 +20,8 @@ RSpec.describe 'ZooApp::AnimalServiceClient', :pact_v2 do
           super()
             .given("there is an alligator named #{alligator_name}")
             .upon_receiving('a request for an alligator')
-            .with_request(:get, "/alligators/#{alligator_name}", headers: headers)
-            .will_respond_with(200, body: alligator_body, headers: content_headers)
+            .with_request(method: :get, path: "/alligators/#{alligator_name}", headers: headers)
+            .will_respond_with(status: 200, body: alligator_body, headers: content_headers)
         end
 
         it 'returns the alligator' do
@@ -37,8 +37,8 @@ RSpec.describe 'ZooApp::AnimalServiceClient', :pact_v2 do
           super()
             .given("there is not an alligator named #{alligator_name}")
             .upon_receiving('a request for an alligator')
-            .with_request(:get, "/alligators/#{alligator_name}", headers: headers)
-            .will_respond_with(404)
+            .with_request(method: :get, path: "/alligators/#{alligator_name}", headers: headers)
+            .will_respond_with(status: 404)
         end
 
         it 'returns nil' do
@@ -54,8 +54,8 @@ RSpec.describe 'ZooApp::AnimalServiceClient', :pact_v2 do
           super()
             .given('an error occurs retrieving an alligator')
             .upon_receiving('a request for an alligator')
-            .with_request(:get, "/alligators/#{alligator_name}", headers: headers)
-            .will_respond_with(500, body: { error: 'Argh!!!' }, headers: content_headers)
+            .with_request(method: :get, path: "/alligators/#{alligator_name}", headers: headers)
+            .will_respond_with(status: 500, body: { error: 'Argh!!!' }, headers: content_headers)
         end
 
         it 'raises an error' do
