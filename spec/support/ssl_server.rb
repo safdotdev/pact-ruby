@@ -31,7 +31,7 @@ if __FILE__ == $0
 
   require "webrick"
   require "webrick/https"
-
+  require "rack/handler/webrick_compat"
   opts = webrick_opts(4444)
 
   Rack::Handler::WebrickCompat::WEBrick.run(app, **opts) do |server|
