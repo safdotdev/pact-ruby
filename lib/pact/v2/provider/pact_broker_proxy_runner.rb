@@ -27,9 +27,16 @@ module Pact
 
         def start
           raise "server already running, stop server before starting new one" if @thread
-
+            # Rack 2/3 compatibility
+          begin
+            require 'rack/handler/webrick'
+            handler = ::Rack::Handler::WEBrick
+          rescue LoadError
+            require 'rackup/handler/webrick'
+            handler = Class.new(Rackup::Handler::WEBrick)
+          end
           @server = WEBrick::HTTPServer.new({BindAddress: @host, Port: @port}, WEBrick::Config::HTTP)
-          @server.mount("/", Rack::Handler::WebrickCompat::WEBrick, PactBrokerProxy.new(
+          @server.mount("/", handler, PactBrokerProxy.new(
             nil,
             backend: @pact_broker_host,
             streaming: false,
