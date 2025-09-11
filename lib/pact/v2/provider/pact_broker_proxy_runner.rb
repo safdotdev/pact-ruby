@@ -29,7 +29,7 @@ module Pact
           raise "server already running, stop server before starting new one" if @thread
 
           @server = WEBrick::HTTPServer.new({BindAddress: @host, Port: @port}, WEBrick::Config::HTTP)
-          @server.mount("/", Rack::Handler::WEBrick, PactBrokerProxy.new(
+          @server.mount("/", Rack::Handler::WebrickCompat::WEBrick, PactBrokerProxy.new(
             nil,
             backend: @pact_broker_host,
             streaming: false,
