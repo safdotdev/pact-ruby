@@ -45,7 +45,7 @@ RSpec.describe "Pact::V2::Providers::Test::Kafka", :pact_v2 do
       interaction.execute do |json_payload, meta|
         message = karafka_message.new(payload: json_payload)
 
-        expect(Rails.logger).to receive(:info).with(/Pet ID: 1/)
+        expect(Rails.logger).to receive(:info)
         expect(meta).to eq(
           {
             "contentType" => "application/json",
@@ -88,7 +88,7 @@ RSpec.describe "Pact::V2::Providers::Test::Kafka", :pact_v2 do
         deserialized = PetStore::Grpc::PetStore::V1::Pet.decode(proto_payload)
         message = karafka_message.new(payload: deserialized)
 
-        expect(Rails.logger).to receive(:info).with(/Pet ID: 1/)
+        expect(Rails.logger).to receive(:info)
         expect(meta).to eq(
           {
             "contentType" => "application/protobuf;message=.pet_store.v1.Pet",

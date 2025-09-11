@@ -3,7 +3,9 @@
 require "pact/v2/rspec"
 
 RSpec.describe "Pact::V2::Providers::Test::HttpClient", :pact_v2 do
-  has_http_pact_between "pact-ruby-v2-test-app", "pact-ruby-v2-test-app"
+  has_http_pact_between "pact-ruby-v2-test-app", "pact-ruby-v2-test-app", opts: {
+    mock_port: 3000
+  }
 
   let(:pet_id) { 123 }
   let(:host) { "localhost:3000" }
