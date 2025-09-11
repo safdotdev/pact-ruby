@@ -28,9 +28,17 @@ module Pact
           @thread = Thread.new do
             @logger.debug "[webrick] starting http server"
 
-            # TODO: support non rail apps
-            # TODO: load from config.ru, if not rails and no app provided?
-            ::Rack::Handler::WEBrick.run(@app || Rails.application,
+            # Rack 2/3 compatibility
+            begin
+              require 'rack/handler/webrick'
+              handler = ::Rack::Handler::WEBrick
+            rescue LoadError
+              require 'rackup/handler/webrick'
+              handler = Class.new(Rackup::Handler::WEBrick)
+            end
+          # TODO: load from config.ru, if not rails and no app provided?
+
+            handler.run(@app || (defined?(Rails) ? Rails.application : nil),
               Host: @options[:host],
               Port: @options[:port],
               Logger: @logger,
