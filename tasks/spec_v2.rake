@@ -28,3 +28,7 @@ end
 # task spec_with_active_support: [:set_active_support_on] do
 #   Rake::Task['pact:v2'].execute
 # end
+
+
+desc 'Run all v2 spec tasks'
+task 'spec:v2:all' => ['spec:v2', 'pact:v2:spec', 'pact:v2:verify']
