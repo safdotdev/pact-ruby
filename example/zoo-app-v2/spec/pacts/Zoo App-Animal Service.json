@@ -67,7 +67,7 @@
     "pactSpecification": {
       "version": "2.0.0"
     },
-    "sbmt-pact": {
+    "pact-ruby-v2": {
       "pact-ffi": "0.4.28"
     }
   },
