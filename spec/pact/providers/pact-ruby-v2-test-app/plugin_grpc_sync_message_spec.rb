@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'pact/v2/rspec'
+require 'pact/rspec'
 
-RSpec.describe 'Test grpc sync message plugin loading', :pact_v2 do
-  has_plugin_sync_message_pact_between 'pact-ruby-v2-test-app', 'pact-ruby-v2-test-app', opts: { mock_port: 3009 }
+RSpec.describe 'Test grpc sync message plugin loading', :pact do
+  has_plugin_sync_message_pact_between 'pact-ruby-test-app', 'pact-ruby-test-app', opts: { mock_port: 3009 }
 
   let(:pet_id) { 123 }
 

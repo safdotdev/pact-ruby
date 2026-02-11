@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'pact/v2'
-require 'pact/v2/rspec'
+require 'pact'
+require 'pact/rspec'
 require_relative '../../internal/app/producers/test_message_producer'
 
-RSpec.describe 'Test Message Provider', :pact_v2 do
+RSpec.describe 'Test Message Provider', :pact do
   message_pact_provider 'Test Message Producer', opts: {
     pact_dir: File.expand_path('../../pacts', __dir__),
   }

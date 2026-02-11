@@ -26,6 +26,9 @@ Gem::Specification.new do |gem|
     'documentation_uri' => 'https://github.com/pact-foundation/pact-ruby/blob/master/README.md'
   }
 
+  gem.add_dependency "ffi"
+  gem.add_dependency "pact-ffi", "~> 0.4.28"
+
   # Shared dev dependencies between v1 and v2
   gem.add_development_dependency 'rake', '~> 13.0'
   gem.add_development_dependency 'faraday', '~>2.0', '<3.0'
@@ -74,23 +77,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rubocop-rails"
   gem.add_development_dependency "rubocop-performance"
   gem.add_development_dependency "standard", ">= 1.35.1"
-
-
-  # Pact v1 dependencies
-  gem.add_runtime_dependency 'rack-test', '>= 0.6.3', '< 3.0.0'
-  gem.add_runtime_dependency 'thor', '>= 0.20', '< 2.0'
-  gem.add_runtime_dependency "rainbow", '~> 3.1'
-
-  gem.add_runtime_dependency "pact-support" , "~> 1.21", ">=1.21.2"
-  gem.add_runtime_dependency 'pact-mock_service', '~> 3.0', '>= 3.3.1'
-  gem.add_development_dependency 'fakefs', '2.4'
-  gem.add_development_dependency 'hashie', '~> 5.0'
-  gem.add_development_dependency 'faraday-multipart', '~> 1.0'
-  gem.add_development_dependency 'conventional-changelog', '~> 1.3'
-  gem.add_development_dependency 'bump', '~> 0.5'
-  gem.add_development_dependency 'pact-message', '~> 0.8'
-  gem.add_development_dependency 'rspec-its', '~> 1.3'
-  # gem.add_development_dependency 'webrick', '~> 1.8' # webrick is a runtime dependency of pact v2, so included above
-  gem.add_development_dependency 'ostruct'
 
 end

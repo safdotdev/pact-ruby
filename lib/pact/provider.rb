@@ -1,3 +1,7 @@
-require 'pact/configuration'
-require 'pact/provider/configuration'
-require 'pact/provider/world'
+# frozen_string_literal: true
+
+module Pact
+  
+    module Provider
+    end
+  end

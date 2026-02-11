@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'pact/v2/rspec'
+require 'pact/rspec'
 require 'net/http'
 require 'json'
 require 'faraday'
-RSpec.describe 'HTTP transport', :pact_v2 do
+RSpec.describe 'HTTP transport', :pact do
   has_plugin_http_pact_between 'myconsumer', 'myprovider'
 
   let(:matt_request) { { 'request' => { 'body' => 'hello' } } }

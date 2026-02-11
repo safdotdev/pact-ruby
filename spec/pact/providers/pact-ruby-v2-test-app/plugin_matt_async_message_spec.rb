@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "pact/v2/rspec"
+require "pact/rspec"
 
-RSpec.describe 'Test matt plugin sync message loading', :pact_v2 do
+RSpec.describe 'Test matt plugin sync message loading', :pact do
   has_plugin_async_message_pact_between "matttcpconsumer", "matttcpprovider"
 
   let(:matt_message) do

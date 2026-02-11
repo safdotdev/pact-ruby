@@ -8,12 +8,8 @@ gem "appraisal", "~> 2.5"
 if ENV['X_PACT_DEVELOPMENT']
   gem "pact-support", path: '../pact-support'
   gem "pact-mock_service", path: '../pact-mock_service'
+  gem "pact-ffi", path: '../pact-ruby-ffi'
   gem "pry-byebug"
-end
-
-group :v2, optional: true do
-  gem "pact-ffi", "~> 0.4.28"
-  gem "ffi"
 end
 
 group :local_development do

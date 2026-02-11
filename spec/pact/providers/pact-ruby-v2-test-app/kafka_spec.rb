@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "pact/v2/rspec"
+require "pact/rspec"
 
-RSpec.describe "Pact::V2::Providers::Test::Kafka", :pact_v2, skip_windows: true do
-  has_message_pact_between "pact-ruby-v2-test-app", "pact-ruby-v2-test-app-kafka"
+RSpec.describe "Pact::Providers::Test::Kafka", :pact, skip_windows: true do
+  has_message_pact_between "pact-ruby-test-app", "pact-ruby-test-app-kafka"
 
   let(:karafka_message) { Struct.new(:payload, keyword_init: true) }
 

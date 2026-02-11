@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "pact/v2/rspec"
+require "pact/rspec"
 
-RSpec.describe "Pact::V2::Providers::Test::HttpClient", :pact_v2 do
-  has_http_pact_between "pact-ruby-v2-test-app", "pact-ruby-v2-test-app", opts: {
+RSpec.describe "Pact::Providers::Test::HttpClient", :pact do
+  has_http_pact_between "pact-ruby-test-app", "pact-ruby-test-app", opts: {
     mock_port: 3000
   }
 

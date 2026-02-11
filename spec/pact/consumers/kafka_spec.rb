@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "pact/v2/rspec"
+require "pact/rspec"
 
-RSpec.describe "Pact::V2::Consumers::Kafka", :pact_v2, skip_windows: true do
-  message_pact_provider "pact-v2-test-app-kafka", opts: {
+RSpec.describe "Pact::Consumers::Kafka", :pact, skip_windows: true do
+  message_pact_provider "pact-test-app-kafka", opts: {
       pact_dir: File.expand_path('../../pacts', __dir__),
       message_handlers: {
         "pet message as json" => proc do |provider_state|
