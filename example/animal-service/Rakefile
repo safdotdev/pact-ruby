@@ -1,6 +1,6 @@
 $: << File.join(File.dirname(__FILE__), "lib")
 
-require 'pact/tasks'
+# require 'pact/tasksx'
 
 task :default => 'pact:verify'
 

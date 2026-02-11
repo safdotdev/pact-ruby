@@ -7,6 +7,7 @@ require "pact/railtie" if defined?(Rails::Railtie)
 
 module Pact
 
+
     class Error < StandardError; end
 
     class ImplementationRequired < Error; end
@@ -34,13 +35,10 @@ module Pact
     end
 end
 
-loader = Zeitwerk::Loader.new
-loader.push_dir(File.join(__dir__,))
-
+loader = Zeitwerk::Loader.for_gem
 loader.tag = "pact"
+loader.ignore("#{__dir__}/pact/version.rb")
 loader.ignore("#{__dir__}/pact/rspec.rb")
 loader.ignore("#{__dir__}/pact/rspec")
-loader.ignore("#{__dir__}/pact/version.rb")
 loader.ignore("#{__dir__}/pact/railtie.rb") unless defined?(Rails::Railtie)
 loader.setup
-loader.eager_load
