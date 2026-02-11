@@ -1,6 +1,5 @@
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.pattern = 'spec/**/*_spec.rb'
-  t.exclude_pattern = 'spec/pact/**/*_spec.rb,spec/v2/**/*_spec.rb'
 end
 # Need to run this in separate process because left over state from
 # testing the actual pact framework messes up the tests that actually
